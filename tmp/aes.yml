@@ -1,0 +1,81 @@
+---
+comments: >
+  Expérience utilisant la version Choco Advanced pour la résolution de la step_{round} et de la step_{1}.
+  La step_{round} n'active pas les contraintes de transitivités sur les DY et les DZ.
+path: '{FILE}/src'
+shortcuts:
+  source: '/home/rloic/IdeaProjects/thesis-code'
+  gradle_conf: 'build_aes_full.gradle'
+  gradle_task: 'jar'
+  exec: 'AESFull-1.0-SNAPSHOT.jar'
+  build_folder: '{source}/build/libs'
+  java: 'java -jar'
+compile: 'gradle --build-file {source}/{gradle_conf} {gradle_task}'
+execute: '{java} {build_folder}/{exec}'
+experiments:
+# AES 128
+  - name: AES128-3-5
+    parameters: [AES-128, 3, 5]
+  - name: AES128-4-12
+    parameters: [AES-128, 4, 12]
+    level: 1
+  - name: AES128-5-17
+    parameters: [AES-128, 5, 17]
+    level: 2
+# AES 192
+  - name: AES192-3-1
+    parameters: [AES-192, 3, 1]
+  - name: AES192-4-4
+    parameters: [AES-192, 4, 4]
+  - name: AES192-5-5
+    parameters: [AES-192, 5, 5]
+  - name: AES192-6-10
+    parameters: [AES-192, 6, 10]
+    level: 1
+  - name: AES192-7-13
+    parameters: [AES-192, 7, 13]
+    level: 1
+  - name: AES192-8-18
+    parameters: [AES-192, 8, 18]
+    level: 2
+  - name: AES192-9-24
+    parameters: [AES-192, 9, 24]
+    level: 2
+# AES 256
+  - name: AES256-3-1
+    parameters: [AES-256, 3, 1]
+  - name: AES256-4-3
+    parameters: [AES-256, 4, 3]
+  - name: AES256-5-3
+    parameters: [AES-256, 5, 3]
+  - name: AES256-6-5
+    parameters: [AES-256, 6, 5]
+  - name: AES256-7-5
+    parameters: [AES-256, 7, 5]
+  - name: AES256-8-10
+    parameters: [AES-256, 8, 10]
+    level: 1
+  - name: AES256-9-15
+    parameters: [AES-256, 9, 15]
+    level: 1
+  - name: AES256-10-16
+    parameters: [AES-256, 10, 16]
+    level: 2
+  - name: AES256-11-20
+    parameters: [AES-256, 11, 20]
+    level: 2
+  - name: AES256-12-20
+    parameters: [AES-256, 12, 20]
+    level: 2
+  - name: AES256-13-24
+    parameters: [AES-256, 13, 24]
+    level: 2
+  - name: AES256-14-24
+    parameters: [AES-256, 14, 24]
+    level: 2
+measures: ['result', '#solutions', '#nodes', 'time']
+stats: [time]
+iterations: 1
+timeout:
+  duration: 5
+  unit: MINUTES
