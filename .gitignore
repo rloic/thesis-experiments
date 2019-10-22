@@ -1,3 +1,7 @@
+# Ignore results and sources
+**/results
+**/src
+
 # Compiled class file
 *.class
 
