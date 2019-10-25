@@ -337,6 +337,7 @@ object CSV {
         for (stat in project.stats) {
             header.append("\"$stat\",")
         }
+        header.append("\"args\",")
         header.append("\n")
         return header.toString()
     }
@@ -375,6 +376,8 @@ object CSV {
             row.append(",")
 
         }
+        row.append(experiment.parameters.joinToString(",") { it.replace(',', ' ') })
+        row.append(",")
         row.append("\n")
         return row.toString()
     }
