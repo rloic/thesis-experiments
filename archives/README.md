@@ -2,6 +2,7 @@
 
 ## Fichiers
 - midori[commit=d2e74dcd603213e11d0f1b79dcab6b9d6428474b]
+- aes[commit=a32f5dbbe36ceaa5a732be2247df378c59551916]
 
 ##### midori[commit=d2e74dcd603213e11d0f1b79dcab6b9d6428474b]
 
@@ -17,3 +18,19 @@ L'heuristique utilisé est :
 - DomOverDWeg*(all)
 
 *DomOverDWeg est une version légèrement modifié qui ne prend pas les heuristiques maximales mais les trois meilleurs scores. Cela permet d'ajouter d'explorer des arbres différents lors des restarts.
+
+##### aes[commit=a32f5dbbe36ceaa5a732be2247df378c59551916]
+
+*Objectifs* : Test sur AES de l'ajout des sommes cumulées pour nbActives
+
+L'heuristique utilisée est :
+
+- Search.minDomLB(nbActives),
+
+- DomOverDWeg*($\Delta$SBoxes),
+
+- DomOverDWeg*(abstractVars),
+
+- DomOverDWeg*(other)
+
+*DomOverDWeg est une version modifié. Lorsque la contrainte qui engendre le conflit est *abstractXOR*, on renforce l'ensemble des autres contraintes qui sont associées à la variable responsable de la contradiction.
