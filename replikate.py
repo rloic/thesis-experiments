@@ -380,7 +380,7 @@ def execute(p: Project, folder: str, config_file_name: str):
                     try:
                         start = datetime.datetime.now()
                         execution = project.restore(project.execute).split(' ') + list(map(str, experiment.parameters))
-                        print('   | {}'.format(' '.join(execution)), end='\t')
+                        print('   > {}'.format(' '.join(execution)), end='\t', flush=True)
                         subprocess.check_call(
                             execution,
                             stdout=log_file,

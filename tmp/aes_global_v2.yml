@@ -1,0 +1,105 @@
+---
+comments: |
+  AES Truncated differential resolution [Compute only abstract solutions]
+  Xors over abstract domain are implemented using the global constraint abstractXOR.
+  The search heuristic is:
+    - Search.minDomLBSearch(nbActives),
+    - WDeg*(sBoxes),
+    - WDeg*(abstractVars)
+  The *WDeg is a modified version of the default Dom/WDeg heuristic implemented in Choco. When a contradiction
+  is raised by the abstractXOR constraint, we increase the weight of all the propagators of the contradiction variable 
+  that are violated.
+  The simple one is :
+    \forall{i} \in [0, Nr - 2], \forall{k} \in [0, 3] \\
+    ~~\sum_{j=0}^{3}{ΔY_i[j][k] + ΔZ_i[j][k]} \in \{0, 5, 6, 7, 8\}
+  And the full MDS property is represented by the constraint C'12 of [1]:
+    \forall{i_1, i_2} \in [0, Nr - 2], \forall{k_1, k_2} \in [0, 3] \\
+    ~~\sum_{j=0}^{3}{diff_{\delta Y_{i_1}[j][k_1], \delta Y_{i_2}[j][k_2]} + diff_{\delta Z_{i_1}[j][k_1], \delta Z_{i_2}[j][k_2]}} \in \{0, 5, 6, 7, 8\}
+  [1] David Gérault, Pascal Lafourcade, Marine Minier, Christine Solnon. 
+  Computing AES related-key differential characteristics with constraint programming. 
+  Artificial Intelligence, Elsevier, 2020, 278, pp.103183. 
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+path: '{FILE}/src'
+shortcuts:
+  gradle_conf: 'build_aes.gradle'
+  gradle_task: 'jar'
+  exec: 'AES-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  java: 'java -jar'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: 06a017c145c2741d03cd52d87841103e2ca21ac4
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec}'
+experiments:
+# AES 128
+  - name: AES128-3-5
+    parameters: [AES-128, 3, 5]
+  - name: AES128-4-12
+    parameters: [AES-128, 4, 12]
+    level: 1
+  - name: AES128-5-17
+    parameters: [AES-128, 5, 17]
+    level: 2
+# AES 192
+  - name: AES192-3-1
+    parameters: [AES-192, 3, 1]
+  - name: AES192-4-4
+    parameters: [AES-192, 4, 4]
+  - name: AES192-5-5
+    parameters: [AES-192, 5, 5]
+  - name: AES192-6-10
+    parameters: [AES-192, 6, 10]
+    level: 1
+  - name: AES192-7-13
+    parameters: [AES-192, 7, 13]
+    level: 1
+  - name: AES192-8-18
+    parameters: [AES-192, 8, 18]
+    level: 2
+  - name: AES192-9-24
+    parameters: [AES-192, 9, 24]
+    level: 2
+# AES 256
+  - name: AES256-3-1
+    parameters: [AES-256, 3, 1]
+  - name: AES256-4-3
+    parameters: [AES-256, 4, 3]
+  - name: AES256-5-3
+    parameters: [AES-256, 5, 3]
+  - name: AES256-6-5
+    parameters: [AES-256, 6, 5]
+  - name: AES256-7-5
+    parameters: [AES-256, 7, 5]
+  - name: AES256-8-10
+    parameters: [AES-256, 8, 10]
+    level: 1
+  - name: AES256-9-15
+    parameters: [AES-256, 9, 15]
+    level: 1
+  - name: AES256-10-16
+    parameters: [AES-256, 10, 16]
+    level: 2
+  - name: AES256-11-20
+    parameters: [AES-256, 11, 20]
+    level: 2
+  - name: AES256-12-20
+    parameters: [AES-256, 12, 20]
+    level: 2
+  - name: AES256-13-24
+    parameters: [AES-256, 13, 24]
+    level: 2
+  - name: AES256-14-24
+    parameters: [AES-256, 14, 24]
+    level: 2
+measures: ['#s', '#dc'] #s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 12
+  unit: HOURS
