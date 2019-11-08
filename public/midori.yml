@@ -1,0 +1,71 @@
+---
+comments: |
+  ## Midori full step resolution of truncated differential
+  This model use the *abstractXOR* constraint to handle the abstract step
+  The mixcolumn operation is modelled by the natural MDS property and an advanced one.
+  The simple one is :
+      \forall{i} \in [0, Nr - 2], \forall{k} \in [0, 3] \\
+      ~~\sum_{j=0}^{3}{ΔY_i[j][k] + ΔZ_i[j][k]} \in \{0, 5, 6, 7, 8\}
+    And the full MDS property is represented by the constraint C'12 of [1]:
+      \forall{i_1, i_2} \in [0, Nr - 2], \forall{k_1, k_2} \in [0, 3] \\
+      ~~\sum_{j=0}^{3}{diff_{\delta Y_{i_1}[j][k_1], \delta Y_{i_2}[j][k_2]} + diff_{\delta Z_{i_1}[j][k_1], \delta Z_{i_2}[j][k_2]}} \in \{0, 5, 6, 7, 8\}
+    [1] David Gérault, Pascal Lafourcade, Marine Minier, Christine Solnon.
+    Computing AES related-key differential characteristics with constraint programming.
+    Artificial Intelligence, Elsevier, 2020, 278, pp.103183.
+path: '{FILE}/src'
+shortcuts:
+  gradle_conf: 'build_midori_full.gradle'
+  gradle_task: 'jar'
+  exec: 'MidoriFullSteps-1.0-SNAPSHOT.jar'
+  build_folder: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -jar'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  commit: 09404ee21e5addd9586b43af66a17c5d53deaa23
+  authentication: true
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build_folder}/{exec}'
+experiments:
+  - name: Midori-128-3-3__custom__0__false
+    parameters: [3, 3, custom, 0, false]
+  - name: Midori-128-4-4__custom__0__false
+    parameters: [4, 4, custom, 0, false]
+  - name: Midori-128-5-5__custom__0__false
+    parameters: [5, 5, custom, 0, false]
+  - name: Midori-128-6-6__custom__0__false
+    parameters: [6, 6, custom, 0, false]
+  - name: Midori-128-7-7__custom__0__false
+    parameters: [7, 7, custom, 0, false]
+  - name: Midori-128-8-8__custom__0__false
+    parameters: [8, 8, custom, 0, false]
+  - name: Midori-128-9-9__custom__0__false
+    parameters: [9, 9, custom, 0, false]
+  - name: Midori-128-10-10__custom__0__false
+    parameters: [10, 10, custom, 0, false]
+  - name: Midori-128-11-11__custom__0__false
+    parameters: [11, 11, custom, 0, false]
+  - name: Midori-128-12-12__custom__0__false
+    parameters: [12, 12, custom, 0, false]
+  - name: Midori-128-13-13__custom__0__false
+    parameters: [13, 13, custom, 0, false]
+  - name: Midori-128-14-14__custom__0__false
+    parameters: [14, 14, custom, 0, false]
+  - name: Midori-128-15-15__custom__0__false
+    parameters: [15, 15, custom, 0, false]
+  - name: Midori-128-16-16__custom__0__false
+    parameters: [16, 16, custom, 0, false]
+  - name: Midori-128-17-17__custom__0__false
+    parameters: [17, 17, custom, 0, false]
+  - name: Midori-128-18-18__custom__0__false
+    parameters: [18, 18, custom, 0, false]
+  - name: Midori-128-19-19__custom__0__false
+    parameters: [19, 19, custom, 0, false]
+  - name: Midori-128-20-20__custom__0__false
+    parameters: [20, 20, custom, 0, false]
+measures: ['p', '#solutions', '#nodes']
+stats: [time]
+iterations: 1
+timeout:
+  duration: 20
+  unit: SECONDS
