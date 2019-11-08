@@ -1,11 +1,20 @@
 #!/usr/bin/python3
+import base64
+import csv
 import datetime
 import getpass
 import os
 import shutil
+import smtplib
+import ssl
 import subprocess
+from email import encoders
+from email.mime.base import MIMEBase
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.utils import formatdate
 from urllib.parse import quote
-from typing import Dict, List, Union, TypeVar
+from typing import Dict, List, Union, TypeVar, Tuple
 
 import yaml
 import sys
@@ -16,7 +25,7 @@ T = TypeVar('T')
 def safe_run(cmd: str) -> bool:
     status = subprocess.call(cmd.split(' '))
     if status != 0:
-        print(' | Fail to run cmd: {}', cmd)
+        print(' | Fail to run cmd: {}'.format(cmd))
     return status == 0
 
 
@@ -110,6 +119,74 @@ class Project:
                 if cmd == old:
                     break
             return cmd
+
+
+class ServerParameters:
+    def __init__(
+            self,
+            host: str,
+            port: int,
+            authentication: Union[str, None]
+    ):
+        self.host = host
+        self.port = port
+        if authentication not in [None, 'STARTTLS', 'SSL/TLS']:
+            raise ValueError('Invalid authentication mode {}'.format(authentication))
+        self.authentication = authentication
+
+
+class MailAccount:
+    def __init__(
+            self,
+            user_name: str,
+            mail: str
+    ):
+        self.user_name = user_name
+        self.mail = mail
+
+
+class EMailer:
+    def __init__(
+            self,
+            server_parameters: ServerParameters,
+            mail_account: MailAccount
+    ):
+        self.server_parameters = server_parameters
+        self.mail_account = mail_account
+        self.pwd = None
+        if server_parameters.authentication is not None:
+            print(' | Required password for sending mail')
+            self.pwd = getpass.getpass(' | Password for {}@{}: '.format(mail_account.user_name, server_parameters.host))
+
+    def send_mail(self, receivers: List[str], subject: str, message: str, files: List[Tuple[str, str]] = []):
+        if self.server_parameters.authentication == 'STARTTLS':
+            context = ssl.create_default_context()
+            with smtplib.SMTP(self.server_parameters.host, self.server_parameters.port) as smtp:
+                smtp.starttls(context=context)
+                smtp.login(
+                    self.mail_account.user_name,
+                    self.pwd
+                )
+                mail = MIMEMultipart()
+                mail['From'] = self.mail_account.mail
+                mail['To'] = ', '.join(receivers)
+                mail['Date'] = formatdate(localtime=True)
+                mail['Subject'] = subject
+                mail.attach(MIMEText(message, 'html'))
+                for (f, name) in files:
+                    part = MIMEBase('application', 'octet-stream')
+                    part.set_payload(open(f, 'rb').read())
+                    encoders.encode_base64(part)
+                    part.add_header('Content-Disposition', 'piece; filename= %s' % name)
+                    mail.attach(part)
+                try:
+                    smtp.sendmail(
+                        self.mail_account.mail,
+                        receivers,
+                        mail.as_string()
+                    )
+                except Exception as e:
+                    print(e)
 
 
 def versioning_from_yml(yml) -> Versioning:
@@ -277,6 +354,88 @@ def remove_nl(s: str) -> str:
     return s.replace('\n', '')
 
 
+class HTML:
+    @staticmethod
+    def header(p: Project) -> str:
+        header = '<tr><th>experiments</th>'
+        for measure in p.measures:
+            if measure != 'skip':
+                header += '<th>' + measure + '</th>'
+        for stat in project.stats:
+            header += '<th>' + stat + '</th>'
+        header += '<th>arguments</th>'
+        header += '</tr>'
+        return header
+
+    @staticmethod
+    def from_csv_file(file):
+        html = '<table>'
+        with open(file, 'r') as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
+            is_header = True
+            for row in csv_reader:
+                html += '<tr>'
+                tag = 'td'
+                end = ''
+                if is_header:
+                    is_header = False
+                    tag = 'th'
+                    end = '</th><th>arguments'
+                html += '<' + tag + '>'
+                html += ('</' + tag + '><' + tag + '>').join(row)
+                html += end
+                html += '</' + tag + '></tr>'
+
+        html += '</table>'
+        return html
+
+    @staticmethod
+    def row(p: Project, exp: Experiment, log_file: Union[str, None], times: List[int]) -> str:
+        row = '<tr><td>' + exp.name + '</td>'
+
+        timeout = None
+        if p.timeout is not None:
+            timeout = p.timeout
+        if exp.timeout is not None:
+            timeout = exp.timeout
+
+        if log_file is not None and os.path.isfile(log_file):
+            content = list(map(remove_nl, open(log_file, 'r').readlines()[-1].split(',')))
+            for i in range(len(p.measures)):
+                row += '<td>'
+                if p.measures[i] != 'skip' and len(content) > i:
+                    row += content[i]
+                row += '</td>'
+
+        for stat in p.stats:
+            value = None
+            if stat == 'min' or stat == 'MIN':
+                value = Stats.min(times)
+            elif stat == 'mean' or stat == 'MEAN' or stat == 'avg' or stat == 'AVERAGE':
+                value = Stats.mean(times)
+            elif stat == 'max' or stat == 'MAX':
+                value = Stats.max(times)
+            elif stat == 'time' or stat == 'TIME':
+                value = Stats.first(times)
+            else:
+                print('Unknown stat {}'.format(stat))
+            if times[0] == -2:
+                row += '<td>error</td>'
+            elif times[0] == -1:
+                row += '<td>timeout (> {} sec)</td>'.format(timeout.to_seconds())
+            elif value is None:
+                row += '<td>nan</td>'
+            else:
+                row += '<td>' + str(value) + '</td>'
+
+        row += '<td>'
+        for parameter in exp.parameters:
+            row += str(parameter)
+            row += '&nbsp;&nbsp;&nbsp;&nbsp;'
+        row += '</td>'
+        return row + '</tr>'
+
+
 class CSV:
     @staticmethod
     def header(p: Project) -> str:
@@ -318,10 +477,12 @@ class CSV:
                 value = Stats.first(times)
             else:
                 print('Unknown stat {}'.format(stat))
-            if value is None:
+            if times[0] == -1:
+                row += 'timeout (> {} sec)'.format(timeout.to_seconds())
+            elif times[0] == -2:
+                row += 'error'
+            elif value is None:
                 row += 'nan'
-            elif value < 0:
-                row += 'error or timeout (> {} sec)'.format(timeout.to_seconds())
             else:
                 row += str(value)
             row += ','
@@ -345,7 +506,13 @@ def yellow(s: str) -> str:
     return '\033[33m' + s + '\033[0m'
 
 
-def execute(p: Project, folder: str, config_file_name: str):
+def execute(
+        p: Project,
+        folder: str,
+        config_file_name: str,
+        emailer: Union[EMailer, None],
+        email_args: Dict[str, Union[str, List[str]]]
+):
     print('>> Running experiments')
     results_folder = folder + '/' + 'results'
     summary = results_folder + '/' + config_file_name + '.csv'
@@ -390,25 +557,142 @@ def execute(p: Project, folder: str, config_file_name: str):
                         end = datetime.datetime.now()
                         times[i] = (end - start).seconds
                         print('[' + blue('V') + ']')
+
                     except subprocess.TimeoutExpired:
                         fill(times, -1)
                         log_file.write('Timeout of {} seconds\n\n'.format(timeout))
+                        log_file.flush()
                         print('[' + yellow('T') + ']')
+
+                        if email_args['on_timeout'] in ['first', 'always'] and emailer is not None:
+                            emailer.send_mail(
+                                email_args['to'],
+                                'Experiment {} timeout'.format(experiment.name),
+                                '<html><body>'
+                                '<h1>' + experiment.name + '</h1>' +
+                                '<table>' +
+                                HTML.header(p) +
+                                HTML.row(p, experiment, exp_folder + '/' + str(i) + '.csv', times) +
+                                '</table>'
+                                '</body></html>',
+                                files=[(exp_folder + '/' + str(i) + '.csv', 'log')]
+                            )
+                            if email_args['on_timeout'] == 'first':
+                                email_args['on_timeout'] = 'never'
+
                         skip_next = True
                     except subprocess.CalledProcessError as c:
-                        fill(times, -1)
+                        fill(times, -2)
                         log_file.write('Subprocess error {}\n\n'.format(c))
+                        log_file.flush()
                         print('[' + red('E') + ']')
+
+                        if email_args['on_failure'] in ['first', 'always'] and emailer is not None:
+                            emailer.send_mail(
+                                email_args['to'],
+                                'Experiment {} has failed'.format(experiment.name),
+                                '<html><body>'
+                                '<h1>' + experiment.name + '</h1>' +
+                                '<table>' +
+                                HTML.header(p) +
+                                HTML.row(p, experiment, exp_folder + '/' + str(i) + '.csv', times) +
+                                '</table>'
+                                '</body></html>',
+                                files=[(exp_folder + '/' + str(i) + '.csv', 'log')]
+                            )
+                            if email_args['on_failure'] == 'first':
+                                email_args['on_failure'] = 'never'
+
                         skip_next = True
                     log_file.close()
                     if skip_next:
                         break
 
+            if email_args['frequency'] == 'each' and emailer is not None:
+                emailer.send_mail(
+                    email_args['to'],
+                    'Experiment {} end'.format(experiment.name),
+                    '<html><body>'
+                    '<h1>' + experiment.name + '</h1>' +
+                    '<table>' +
+                    HTML.header(p) +
+                    HTML.row(p, experiment, exp_folder + '/0.csv', times) +
+                    '</table>'
+                    '</body></html>',
+                )
+
             with open(summary, 'a+') as summary_csv:
                 summary_csv.write(CSV.row(p, experiment, exp_folder + '/0.csv', times))
                 summary_csv.close()
 
+    files = []
+    if 'summary' in email_args['attach']:
+        files.append((summary, 'summary.csv'))
+    if email_args['frequency'] == 'end' and emailer is not None:
+        comments = p.comments if p.comments is not None else 'None'
+        emailer.send_mail(
+            email_args['to'],
+            'Experiment %s end' % config_file_name,
+            '<html><body>' +
+            '<h1>' + config_file_name + '</h1>' +
+            'Description: <br/><pre><code>' +
+            comments +
+            '</code></pre>' +
+            HTML.from_csv_file(summary) +
+            '</body></html>',
+            files
+        )
+
     print('<< Running experiments')
+
+
+def emailer_from_file(f) -> Union[EMailer, None]:
+    try:
+        data = yaml.safe_load(f)
+        return EMailer(
+            server_parameters_from_yml(data['server']),
+            mail_account_from_yml(data['mail_account'])
+        )
+    except yaml.YAMLError as e:
+        print(e)
+        return None
+
+
+def server_parameters_from_yml(yml) -> ServerParameters:
+    return ServerParameters(
+        yml['host'],
+        int(yml['port']),
+        yml['authentication']
+    )
+
+
+def mail_account_from_yml(yml) -> MailAccount:
+    return MailAccount(
+        yml['username'],
+        yml['mail']
+    )
+
+
+def init_mail(email_args: Dict[str, str]) -> Union[EMailer, None]:
+    if not os.path.exists(email_args['config']):
+        print('The configuration file %s for sending email is not present' % email_args['config'])
+        cancel_emails = input('If you continue, the emails will not be send during the execution [Y\\n]? ')
+        while cancel_emails not in ['', 'y', 'Y', 'n', 'N']:
+            cancel_emails = input('If you continue, the emails will not be send during the execution [Y\\n]? ')
+        if cancel_emails in ['', 'y', 'Y']:
+            return None
+        raise ValueError('Unknown configuration file %s' % email_args['config'])
+
+    with open(email_args['config'], 'r') as email_config_file:
+        return emailer_from_file(email_config_file)
+
+
+def is_email_arg(s: str) -> bool:
+    return s.startswith('--mail:')
+
+
+def clean_mail_args(s: str) -> (str, str):
+    return s[7:].split('=')
 
 
 if __name__ == '__main__':
@@ -433,6 +717,13 @@ if __name__ == '__main__':
                     .format(project.path + '/results')
             )
             print(' --clean:\t Clean the results folder')
+            print(' --mail: Configure the automatic email sending. ex --email:to=me@my-mail.com --email:frequency=each')
+            print('    to: add an email to the recipients')
+            print('    frequency: send an email foreach experiment (each) or when the full summary is complete (end).')
+            print('    on_failure: indicates whenever an email must be send when an experiment fails, '
+                  'valid options are [never, first, always]')
+            print('    on_timeout: indicates whenever an email must be send when an experiment produces a timeout, '
+                  'valid options are [never, first, always]')
             print()
             if project.comments is not None:
                 print('Notes: ')
@@ -451,5 +742,25 @@ if __name__ == '__main__':
             clean(folder)
             init(project, folder)
 
+        email_args = list(map(clean_mail_args, filter(is_email_arg, sys.argv)))
+        mail_params = {
+            'to': [],
+            'frequency': 'never',
+            'on_failure': 'never',
+            'on_timeout': 'never',
+            'attach': [],
+            'config': 'account.yml'
+        }
+        emailer = None
+        if len(email_args) != 0:
+            for (key, value) in email_args:
+                if key in ['to', 'attach']:
+                    mail_params[key].append(value)
+                elif key in ['on_failure', 'on_timeout', 'frequency', 'config']:
+                    mail_params[key] = value
+                else:
+                    print('invalid mail configuration argument: %s' % key)
+            emailer = init_mail(mail_params)
+
         if '-r' in sys.argv or '--run' in sys.argv:
-            execute(project, folder, config_filename)
+            execute(project, folder, config_filename, emailer, mail_params)

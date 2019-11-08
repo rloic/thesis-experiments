@@ -1,6 +1,9 @@
 # Ignore idea folder
 .idea
 
+# Ignore account configuration file
+account.yml
+
 # Ignore results and sources
 **/results
 **/src
