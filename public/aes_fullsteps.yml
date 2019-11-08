@@ -1,19 +1,20 @@
 ---
 comments: |
-  AES Truncated differential resolution [Compute only abstract solutions]
+  ## AES Truncated differential resolution
   Xors over abstract domain are implemented using the global constraint abstractXOR.
   The search heuristic is:
-    - Search.minDomLBSearch(nbActives),
-    - WDeg*(sBoxes),
-    - WDeg*(abstractVars)
-  The *WDeg is a modified version of the default Dom/WDeg heuristic implemented in Choco. When a contradiction
-  is raised by the abstractXOR constraint, we increase the weight of all the propagators of the contradiction variable 
-  that are violated.
-  The simple one is :
-    \forall{i} \in [0, Nr - 2], \forall{k} \in [0, 3] \\
-    ~~\sum_{j=0}^{3}{ΔY_i[j][k] + ΔZ_i[j][k]} \in \{0, 5, 6, 7, 8\}
-  And the full MDS property is represented by the constraint C'12 of [1]:
-    \forall{i_1, i_2} \in [0, Nr - 2], \forall{k_1, k_2} \in [0, 3] \\
+    - Dom/WDeg(nbActives)
+    - Dom/WDeg(ΔSBoxes) # abstract values
+    - Dom/WDeg(abstract variables) # other than the ΔSBoxes
+    - Dom/WDeg(probabilities)
+    - Dom/WDeg(δSBoxes) # byte values
+    - Dom/WDeg(others)
+  The Dom/WDeg is a modified version of the default Dom/WDeg heuristic implemented in Choco. When a contradiction
+  is raised by the abstractXOR constraint, we increase the weight of the contradiction variable by incrementing all the
+  weight of its propagators (the weights are increased by 1). If the contradiction is raised by another propagator we increment its weight of 5. 
+  MixColumn is handled by using the fact that (ΔY != false) <=> (2 * ΔY != false) <=> (3 * ΔY != false)
+  We also add the MDS property using the constraint C'12 of [1]:
+    \forall{i_1, i_2} \in [0, Nr - 2], \forall{k_1, k_2} \in [0, 3]\\
     ~~\sum_{j=0}^{3}{diff_{\delta Y_{i_1}[j][k_1], \delta Y_{i_2}[j][k_2]} + diff_{\delta Z_{i_1}[j][k_1], \delta Z_{i_2}[j][k_2]}} \in \{0, 5, 6, 7, 8\}
   [1] David Gérault, Pascal Lafourcade, Marine Minier, Christine Solnon. 
   Computing AES related-key differential characteristics with constraint programming. 
@@ -25,15 +26,16 @@ requirements:
     version: 1.8
 path: '{FILE}/src'
 shortcuts:
-  gradle_conf: 'build_aes.gradle'
+  gradle_conf: 'build_aes_full.gradle'
   gradle_task: 'jar'
-  exec: 'AES-1.0-SNAPSHOT.jar'
+  exec: 'AESFull-1.0-SNAPSHOT.jar'
   build: '{PROJECT}/build/libs'
-  java: 'java -jar'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -jar'
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 06a017c145c2741d03cd52d87841103e2ca21ac4
+  commit: 7859cc31e7763d38460c7a5fd97eb093371266cd
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec}'
 experiments:
@@ -97,7 +99,7 @@ experiments:
   - name: AES256-14-24
     parameters: [AES-256, 14, 24]
     level: 2
-measures: ['#s', '#dc'] #s = nb solutions, #dc = nb decision points
+measures: ['p','#s', '#dc'] # p = probability, #s = nb solutions, #dc = nb decision points
 stats: [time]
 iterations: 1
 timeout:
