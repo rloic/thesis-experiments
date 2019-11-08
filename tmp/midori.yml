@@ -1,261 +1,71 @@
 ---
-comments: >
-  Expérience utilisant la version Choco Advanced pour la résolution de la step_{round} et de la step_{1}.
-  La step_{round} n'active pas les contraintes de transitivités sur les DY et les DZ.
+comments: |
+  ## Midori full step resolution of truncated differential
+  This model use the *abstractXOR* constraint to handle the abstract step
+  The mixcolumn operation is modelled by the natural MDS property and an advanced one.
+  The simple one is :
+      \forall{i} \in [0, Nr - 2], \forall{k} \in [0, 3] \\
+      ~~\sum_{j=0}^{3}{ΔY_i[j][k] + ΔZ_i[j][k]} \in \{0, 5, 6, 7, 8\}
+    And the full MDS property is represented by the constraint C'12 of [1]:
+      \forall{i_1, i_2} \in [0, Nr - 2], \forall{k_1, k_2} \in [0, 3] \\
+      ~~\sum_{j=0}^{3}{diff_{\delta Y_{i_1}[j][k_1], \delta Y_{i_2}[j][k_2]} + diff_{\delta Z_{i_1}[j][k_1], \delta Z_{i_2}[j][k_2]}} \in \{0, 5, 6, 7, 8\}
+    [1] David Gérault, Pascal Lafourcade, Marine Minier, Christine Solnon.
+    Computing AES related-key differential characteristics with constraint programming.
+    Artificial Intelligence, Elsevier, 2020, 278, pp.103183.
 path: '{FILE}/src'
 shortcuts:
-  source: '/home/rloic/IdeaProjects/thesis-code'
   gradle_conf: 'build_midori_full.gradle'
   gradle_task: 'jar'
   exec: 'MidoriFullSteps-1.0-SNAPSHOT.jar'
-  build_folder: '{source}/build/libs'
-  java: 'java -jar'
-compile: 'gradle --build-file {source}/{gradle_conf} {gradle_task}'
+  build_folder: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -jar'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  commit: 09404ee21e5addd9586b43af66a17c5d53deaa23
+  authentication: true
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build_folder}/{exec}'
 experiments:
-  - name: Midori-3-3 custom 5
-    parameters: [3, 3, custom, 5]
-  - name: Midori-3-3 custom 10
-    parameters: [3, 3, custom, 10]
-  - name: Midori-3-3 custom 15
-    parameters: [3, 3, custom, 15]
-  - name: Midori-3-3 custom 20
-    parameters: [3, 3, custom, 20]
-  - name: Midori-3-3 impact-based 5
-    parameters: [3, 3, impact-based, 5]
-  - name: Midori-3-3 impact-based 10
-    parameters: [3, 3, impact-based, 10]
-  - name: Midori-3-3 impact-based 15
-    parameters: [3, 3, impact-based, 15]
-  - name: Midori-3-3 impact-based 20
-    parameters: [3, 3, impact-based, 20]
-  - name: Midori-3-3 dom-wdeg 5
-    parameters: [3, 3, dom-wdeg, 5]
-  - name: Midori-3-3 dom-wdeg 10
-    parameters: [3, 3, dom-wdeg, 10]
-  - name: Midori-3-3 dom-wdeg 15
-    parameters: [3, 3, dom-wdeg, 15]
-  - name: Midori-3-3 dom-wdeg 20
-    parameters: [3, 3, dom-wdeg, 20]
-  - name: Midori-4-4 custom 5
-    parameters: [4, 4, custom, 5]
-  - name: Midori-4-4 custom 10
-    parameters: [4, 4, custom, 10]
-  - name: Midori-4-4 custom 15
-    parameters: [4, 4, custom, 15]
-  - name: Midori-4-4 custom 20
-    parameters: [4, 4, custom, 20]
-  - name: Midori-4-4 impact-based 5
-    parameters: [4, 4, impact-based, 5]
-  - name: Midori-4-4 impact-based 10
-    parameters: [4, 4, impact-based, 10]
-  - name: Midori-4-4 impact-based 15
-    parameters: [4, 4, impact-based, 15]
-  - name: Midori-4-4 impact-based 20
-    parameters: [4, 4, impact-based, 20]
-  - name: Midori-4-4 dom-wdeg 5
-    parameters: [4, 4, dom-wdeg, 5]
-  - name: Midori-4-4 dom-wdeg 10
-    parameters: [4, 4, dom-wdeg, 10]
-  - name: Midori-4-4 dom-wdeg 15
-    parameters: [4, 4, dom-wdeg, 15]
-  - name: Midori-4-4 dom-wdeg 20
-    parameters: [4, 4, dom-wdeg, 20]
-  - name: Midori-5-5 custom 5
-    parameters: [5, 5, custom, 5]
-  - name: Midori-5-5 custom 10
-    parameters: [5, 5, custom, 10]
-  - name: Midori-5-5 custom 15
-    parameters: [5, 5, custom, 15]
-  - name: Midori-5-5 custom 20
-    parameters: [5, 5, custom, 20]
-  - name: Midori-5-5 impact-based 5
-    parameters: [5, 5, impact-based, 5]
-  - name: Midori-5-5 impact-based 10
-    parameters: [5, 5, impact-based, 10]
-  - name: Midori-5-5 impact-based 15
-    parameters: [5, 5, impact-based, 15]
-  - name: Midori-5-5 impact-based 20
-    parameters: [5, 5, impact-based, 20]
-  - name: Midori-5-5 dom-wdeg 5
-    parameters: [5, 5, dom-wdeg, 5]
-  - name: Midori-5-5 dom-wdeg 10
-    parameters: [5, 5, dom-wdeg, 10]
-  - name: Midori-5-5 dom-wdeg 15
-    parameters: [5, 5, dom-wdeg, 15]
-  - name: Midori-5-5 dom-wdeg 20
-    parameters: [5, 5, dom-wdeg, 20]
-  - name: Midori-6-6 custom 5
-    parameters: [6, 6, custom, 5]
-  - name: Midori-6-6 custom 10
-    parameters: [6, 6, custom, 10]
-  - name: Midori-6-6 custom 15
-    parameters: [6, 6, custom, 15]
-  - name: Midori-6-6 custom 20
-    parameters: [6, 6, custom, 20]
-  - name: Midori-6-6 impact-based 5
-    parameters: [6, 6, impact-based, 5]
-  - name: Midori-6-6 impact-based 10
-    parameters: [6, 6, impact-based, 10]
-  - name: Midori-6-6 impact-based 15
-    parameters: [6, 6, impact-based, 15]
-  - name: Midori-6-6 impact-based 20
-    parameters: [6, 6, impact-based, 20]
-  - name: Midori-6-6 dom-wdeg 5
-    parameters: [6, 6, dom-wdeg, 5]
-  - name: Midori-6-6 dom-wdeg 10
-    parameters: [6, 6, dom-wdeg, 10]
-  - name: Midori-6-6 dom-wdeg 15
-    parameters: [6, 6, dom-wdeg, 15]
-  - name: Midori-6-6 dom-wdeg 20
-    parameters: [6, 6, dom-wdeg, 20]
-  - name: Midori-7-7 custom 5
-    parameters: [7, 7, custom, 5]
-  - name: Midori-7-7 custom 10
-    parameters: [7, 7, custom, 10]
-  - name: Midori-7-7 custom 15
-    parameters: [7, 7, custom, 15]
-  - name: Midori-7-7 custom 20
-    parameters: [7, 7, custom, 20]
-  - name: Midori-7-7 impact-based 5
-    parameters: [7, 7, impact-based, 5]
-  - name: Midori-7-7 impact-based 10
-    parameters: [7, 7, impact-based, 10]
-  - name: Midori-7-7 impact-based 15
-    parameters: [7, 7, impact-based, 15]
-  - name: Midori-7-7 impact-based 20
-    parameters: [7, 7, impact-based, 20]
-  - name: Midori-7-7 dom-wdeg 5
-    parameters: [7, 7, dom-wdeg, 5]
-  - name: Midori-7-7 dom-wdeg 10
-    parameters: [7, 7, dom-wdeg, 10]
-  - name: Midori-7-7 dom-wdeg 15
-    parameters: [7, 7, dom-wdeg, 15]
-  - name: Midori-7-7 dom-wdeg 20
-    parameters: [7, 7, dom-wdeg, 20]
-  - name: Midori-8-8 custom 5
-    parameters: [8, 8, custom, 5]
-  - name: Midori-8-8 custom 10
-    parameters: [8, 8, custom, 10]
-  - name: Midori-8-8 custom 15
-    parameters: [8, 8, custom, 15]
-  - name: Midori-8-8 custom 20
-    parameters: [8, 8, custom, 20]
-  - name: Midori-8-8 impact-based 5
-    parameters: [8, 8, impact-based, 5]
-  - name: Midori-8-8 impact-based 10
-    parameters: [8, 8, impact-based, 10]
-  - name: Midori-8-8 impact-based 15
-    parameters: [8, 8, impact-based, 15]
-  - name: Midori-8-8 impact-based 20
-    parameters: [8, 8, impact-based, 20]
-  - name: Midori-8-8 dom-wdeg 5
-    parameters: [8, 8, dom-wdeg, 5]
-  - name: Midori-8-8 dom-wdeg 10
-    parameters: [8, 8, dom-wdeg, 10]
-  - name: Midori-8-8 dom-wdeg 15
-    parameters: [8, 8, dom-wdeg, 15]
-  - name: Midori-8-8 dom-wdeg 20
-    parameters: [8, 8, dom-wdeg, 20]
-  - name: Midori-9-9 custom 5
-    parameters: [9, 9, custom, 5]
-  - name: Midori-9-9 custom 10
-    parameters: [9, 9, custom, 10]
-  - name: Midori-9-9 custom 15
-    parameters: [9, 9, custom, 15]
-  - name: Midori-9-9 custom 20
-    parameters: [9, 9, custom, 20]
-  - name: Midori-9-9 impact-based 5
-    parameters: [9, 9, impact-based, 5]
-  - name: Midori-9-9 impact-based 10
-    parameters: [9, 9, impact-based, 10]
-  - name: Midori-9-9 impact-based 15
-    parameters: [9, 9, impact-based, 15]
-  - name: Midori-9-9 impact-based 20
-    parameters: [9, 9, impact-based, 20]
-  - name: Midori-9-9 dom-wdeg 5
-    parameters: [9, 9, dom-wdeg, 5]
-  - name: Midori-9-9 dom-wdeg 10
-    parameters: [9, 9, dom-wdeg, 10]
-  - name: Midori-9-9 dom-wdeg 15
-    parameters: [9, 9, dom-wdeg, 15]
-  - name: Midori-9-9 dom-wdeg 20
-    parameters: [9, 9, dom-wdeg, 20]
-  - name: Midori-10-10 custom 5
-    parameters: [10, 10, custom, 5]
-  - name: Midori-10-10 custom 10
-    parameters: [10, 10, custom, 10]
-  - name: Midori-10-10 custom 15
-    parameters: [10, 10, custom, 15]
-  - name: Midori-10-10 custom 20
-    parameters: [10, 10, custom, 20]
-  - name: Midori-10-10 impact-based 5
-    parameters: [10, 10, impact-based, 5]
-  - name: Midori-10-10 impact-based 10
-    parameters: [10, 10, impact-based, 10]
-  - name: Midori-10-10 impact-based 15
-    parameters: [10, 10, impact-based, 15]
-  - name: Midori-10-10 impact-based 20
-    parameters: [10, 10, impact-based, 20]
-  - name: Midori-10-10 dom-wdeg 5
-    parameters: [10, 10, dom-wdeg, 5]
-  - name: Midori-10-10 dom-wdeg 10
-    parameters: [10, 10, dom-wdeg, 10]
-  - name: Midori-10-10 dom-wdeg 15
-    parameters: [10, 10, dom-wdeg, 15]
-  - name: Midori-10-10 dom-wdeg 20
-    parameters: [10, 10, dom-wdeg, 20]
-  - name: Midori-11-11 custom 5
-    parameters: [11, 11, custom, 5]
-  - name: Midori-11-11 custom 10
-    parameters: [11, 11, custom, 10]
-  - name: Midori-11-11 custom 15
-    parameters: [11, 11, custom, 15]
-  - name: Midori-11-11 custom 20
-    parameters: [11, 11, custom, 20]
-  - name: Midori-11-11 impact-based 5
-    parameters: [11, 11, impact-based, 5]
-  - name: Midori-11-11 impact-based 10
-    parameters: [11, 11, impact-based, 10]
-  - name: Midori-11-11 impact-based 15
-    parameters: [11, 11, impact-based, 15]
-  - name: Midori-11-11 impact-based 20
-    parameters: [11, 11, impact-based, 20]
-  - name: Midori-11-11 dom-wdeg 5
-    parameters: [11, 11, dom-wdeg, 5]
-  - name: Midori-11-11 dom-wdeg 10
-    parameters: [11, 11, dom-wdeg, 10]
-  - name: Midori-11-11 dom-wdeg 15
-    parameters: [11, 11, dom-wdeg, 15]
-  - name: Midori-11-11 dom-wdeg 20
-    parameters: [11, 11, dom-wdeg, 20]
-  - name: Midori-12-12 custom 5
-    parameters: [12, 12, custom, 5]
-  - name: Midori-12-12 custom 10
-    parameters: [12, 12, custom, 10]
-  - name: Midori-12-12 custom 15
-    parameters: [12, 12, custom, 15]
-  - name: Midori-12-12 custom 20
-    parameters: [12, 12, custom, 20]
-  - name: Midori-12-12 impact-based 5
-    parameters: [12, 12, impact-based, 5]
-  - name: Midori-12-12 impact-based 10
-    parameters: [12, 12, impact-based, 10]
-  - name: Midori-12-12 impact-based 15
-    parameters: [12, 12, impact-based, 15]
-  - name: Midori-12-12 impact-based 20
-    parameters: [12, 12, impact-based, 20]
-  - name: Midori-12-12 dom-wdeg 5
-    parameters: [12, 12, dom-wdeg, 5]
-  - name: Midori-12-12 dom-wdeg 10
-    parameters: [12, 12, dom-wdeg, 10]
-  - name: Midori-12-12 dom-wdeg 15
-    parameters: [12, 12, dom-wdeg, 15]
-  - name: Midori-12-12 dom-wdeg 20
-    parameters: [12, 12, dom-wdeg, 20]
-measures: ['result', '#solutions', '#nodes']
+  - name: Midori-128-3-3__custom__0__false
+    parameters: [3, 3, custom, 0, false]
+  - name: Midori-128-4-4__custom__0__false
+    parameters: [4, 4, custom, 0, false]
+  - name: Midori-128-5-5__custom__0__false
+    parameters: [5, 5, custom, 0, false]
+  - name: Midori-128-6-6__custom__0__false
+    parameters: [6, 6, custom, 0, false]
+  - name: Midori-128-7-7__custom__0__false
+    parameters: [7, 7, custom, 0, false]
+  - name: Midori-128-8-8__custom__0__false
+    parameters: [8, 8, custom, 0, false]
+  - name: Midori-128-9-9__custom__0__false
+    parameters: [9, 9, custom, 0, false]
+  - name: Midori-128-10-10__custom__0__false
+    parameters: [10, 10, custom, 0, false]
+  - name: Midori-128-11-11__custom__0__false
+    parameters: [11, 11, custom, 0, false]
+  - name: Midori-128-12-12__custom__0__false
+    parameters: [12, 12, custom, 0, false]
+  - name: Midori-128-13-13__custom__0__false
+    parameters: [13, 13, custom, 0, false]
+  - name: Midori-128-14-14__custom__0__false
+    parameters: [14, 14, custom, 0, false]
+  - name: Midori-128-15-15__custom__0__false
+    parameters: [15, 15, custom, 0, false]
+  - name: Midori-128-16-16__custom__0__false
+    parameters: [16, 16, custom, 0, false]
+  - name: Midori-128-17-17__custom__0__false
+    parameters: [17, 17, custom, 0, false]
+  - name: Midori-128-18-18__custom__0__false
+    parameters: [18, 18, custom, 0, false]
+  - name: Midori-128-19-19__custom__0__false
+    parameters: [19, 19, custom, 0, false]
+  - name: Midori-128-20-20__custom__0__false
+    parameters: [20, 20, custom, 0, false]
+measures: ['p', '#solutions', '#nodes']
 stats: [time]
 iterations: 1
 timeout:
-  duration: 5
-  unit: MINUTES
+  duration: 20
+  unit: SECONDS

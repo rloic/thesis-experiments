@@ -1,6 +1,6 @@
 ---
 comments: |
-  AES Truncated differential resolution
+  ## AES Truncated differential resolution
   Xors over abstract domain are implemented using the global constraint abstractXOR.
   The search heuristic is:
     - Dom/WDeg(nbActives)
@@ -30,7 +30,8 @@ shortcuts:
   gradle_task: 'jar'
   exec: 'AESFull-1.0-SNAPSHOT.jar'
   build: '{PROJECT}/build/libs'
-  java: 'java -jar'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -jar'
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
