@@ -1,0 +1,74 @@
+---
+comments: |
+  ## AES Step 1
+
+  Model: AES Advanced [1]
+
+  NbActives ordering : alternatives (nbActives[len-1], nbActives[0], nbActives[len-2], nbActives[1], ...)
+
+  Heuristic : Dom/WDeg (standard version)
+
+  Heuristic splits : [nbActives, $\Delta$SBoxes, abstractVars*]
+  *abstractVars = [$\Delta$PlainText, $\Delta$CipherText, $\Delta Y$, $\Delta Z$] and $\Delta Y$ are a combination of $\Delta$SBoxes.
+
+  Parameters : mds, advanced mds, key schedule xor generation are activated
+
+  [1] David Gérault, Pascal Lafourcade, Marine Minier, Christine Solnon. Revisiting AES Related-Key
+      Differential Attacks with Constraint Programming. Information Processing Letters, Elsevier, 2018,
+      139, pp.24-29
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+path: '{FILE}/src'
+shortcuts:
+  gradle_conf: 'build_aes.gradle'
+  gradle_task: 'jar'
+  exec: 'AES-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -jar'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: 80ed57a75ae45462ada9abb224d2be81643da81d
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec}'
+experiments:
+# AES 128
+  - name: AES128-3-5
+    parameters: [version=AES-128, r=3, sb=5]
+  - name: AES128-4-12
+    parameters: [version=AES-128, r=4, sb=12]
+    level: 1
+# AES 192
+  - name: AES192-3-1
+    parameters: [version=AES-192, r=3, sb=1]
+  - name: AES192-4-4
+    parameters: [version=AES-192, r=4, sb=4]
+  - name: AES192-5-5
+    parameters: [version=AES-192, r=5, sb=5]
+  - name: AES192-6-10
+    parameters: [version=AES-192, r=6, sb=10]
+    level: 1
+# AES 256
+  - name: AES256-3-1
+    parameters: [version=AES-256, r=3, sb=1]
+  - name: AES256-4-3
+    parameters: [version=AES-256, r=4, sb=3]
+  - name: AES256-5-3
+    parameters: [version=AES-256, r=5, sb=3]
+  - name: AES256-6-5
+    parameters: [version=AES-256, r=6, sb=5]
+  - name: AES256-7-5
+    parameters: [version=AES-256, r=7, sb=5]
+  - name: AES256-8-10
+    parameters: [version=AES-256, r=8, sb=10]
+    level: 1
+measures: ['#s', '#dc'] #s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 45
+  unit: MINUTES
