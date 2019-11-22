@@ -609,7 +609,7 @@ def execute(
                     if skip_next:
                         break
 
-            if email_args['frequency'] == 'each' and emailer is not None:
+            if email_args['frequency'] == 'each' or email_args['frequency'] == 'end' and emailer is not None:
                 emailer.send_mail(
                     email_args['to'],
                     'Experiment {} end'.format(experiment.name),
