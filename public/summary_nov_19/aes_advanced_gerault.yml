@@ -1,15 +1,12 @@
 ---
 comments: |
   ## AES Step 1
+
   Model: AES Advanced [1]
-  This version is improved by using nbActives, which is the number of active sBoxes for each round
-  NbActives ordering : alternatives (nbActives[len-1], nbActives[0], nbActives[len-2], nbActives[1], ...)
   Heuristic : Dom/WDeg (standard version)
 
-  Heuristic splits : [nbActives, $\Delta$SBoxes, abstractVars*]
-  *abstractVars = [$\Delta$PlainText, $\Delta$CipherText, $\Delta Y$, $\Delta Z$] and $\Delta Y$ are a combination of $\Delta$SBoxes.
-
-  Parameters : mds, advanced mds, key schedule xor generation are activated
+  Heuristic splits : [$\Delta$SBoxes, abstractVars*]
+  *abstractVars = [$\Delta X$, $\Delta K$, $\Delta Z$] and $\Delta Y$ are a combination of $\Delta$SBoxes.
 
   [1] David Gérault, Pascal Lafourcade, Marine Minier, Christine Solnon. Revisiting AES Related-Key
       Differential Attacks with Constraint Programming. Information Processing Letters, Elsevier, 2018,
@@ -21,16 +18,16 @@ requirements:
     version: 1.8
 path: '{FILE}/src'
 shortcuts:
-  gradle_conf: 'build_aes.gradle'
+  gradle_conf: 'build_exp.gradle'
   gradle_task: 'jar'
-  exec: 'AES-1.0-SNAPSHOT.jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
   build: '{PROJECT}/build/libs'
   jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
   java: 'java {jvm_args} -jar'
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 80ed57a75ae45462ada9abb224d2be81643da81d
+  commit: 564e6a490d5ea231dbccb128b5128412174f9abd
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec}'
 experiments:

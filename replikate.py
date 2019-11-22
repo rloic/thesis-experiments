@@ -181,12 +181,12 @@ class EMailer:
                         part.add_header('Content-Disposition', 'piece; filename= %s' % name)
                         mail.attach(part)
 
-                        smtp.sendmail(
-                            self.mail_account.mail,
-                            receivers,
-                            mail.as_string()
-                        )
-            except smtplib.SMTPException:
+                    smtp.sendmail(
+                        self.mail_account.mail,
+                        receivers,
+                        mail.as_string()
+                    )
+            except smtplib.SMTPException as e:
                 print('Cannot send email')
 
 
@@ -620,6 +620,7 @@ def execute(
                     HTML.row(p, experiment, exp_folder + '/0.csv', times) +
                     '</table>'
                     '</body></html>',
+                    []
                 )
 
             with open(summary, 'a+') as summary_csv:
@@ -718,13 +719,13 @@ if __name__ == '__main__':
                     .format(project.path + '/results')
             )
             print(' --clean:\t Clean the results folder')
-            # print(' --mail: Configure the automatic email sending. ex --email:to=me@my-mail.com --email:frequency=each')
-            # print('    to: add an email to the recipients')
-            # print('    frequency: send an email foreach experiment (each) or when the full summary is complete (end).')
-            # print('    on_failure: indicates whenever an email must be send when an experiment fails, '
-            #      'valid options are [never, first, always]')
-            # print('    on_timeout: indicates whenever an email must be send when an experiment produces a timeout, '
-            #      'valid options are [never, first, always]')
+            print(' --mail: Configure the automatic email sending. ex --email:to=me@my-mail.com --email:frequency=each')
+            print('    to: add an email to the recipients')
+            print('    frequency: send an email foreach experiment (each) or when the full summary is complete (end).')
+            print('    on_failure: indicates whenever an email must be send when an experiment fails, '
+                  'valid options are [never, first, always]')
+            print('    on_timeout: indicates whenever an email must be send when an experiment produces a timeout, '
+                  'valid options are [never, first, always]')
             print()
             if project.comments is not None:
                 print('Notes: ')
