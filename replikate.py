@@ -609,23 +609,23 @@ def execute(
                     if skip_next:
                         break
 
-            if email_args['frequency'] == 'each' and emailer is not None:
-                emailer.send_mail(
-                    email_args['to'],
-                    'Experiment {} end'.format(experiment.name),
-                    '<html><body>'
-                    '<h1>' + experiment.name + '</h1>' +
-                    '<table>' +
-                    HTML.header(p) +
-                    HTML.row(p, experiment, exp_folder + '/0.csv', times) +
-                    '</table>'
-                    '</body></html>',
-                    []
-                )
+                with open(summary, 'a+') as summary_csv:
+                    summary_csv.write(CSV.row(p, experiment, exp_folder + '/0.csv', times))
+                    summary_csv.close()
 
-            with open(summary, 'a+') as summary_csv:
-                summary_csv.write(CSV.row(p, experiment, exp_folder + '/0.csv', times))
-                summary_csv.close()
+                if email_args['frequency'] == 'each' and emailer is not None:
+                    emailer.send_mail(
+                        email_args['to'],
+                        'Experiment {} end'.format(experiment.name),
+                        '<html><body>'
+                        '<h1>' + experiment.name + '</h1>' +
+                        '<table>' +
+                        HTML.header(p) +
+                        HTML.row(p, experiment, exp_folder + '/0.csv', times) +
+                        '</table>'
+                        '</body></html>',
+                        []
+                    )
 
     files = []
     if 'summary' in email_args['attach']:
@@ -646,6 +646,23 @@ def execute(
         )
 
     print('<< Running experiments')
+
+
+def generate_file(p: Project, config_file_name: str, model: str):
+    hash = subprocess.check_output('git rev-parse --verify HEAD'.split(' '))
+    hash = hash.decode('UTF-8').replace('\n', '')
+    short_hash = hash[:6]
+    print('\\begin{{model}}[{} {}] \\label{{md:{}:{}}}'
+        .format(
+            model.replace('_', ' '),
+            short_hash,
+            config_file_name[:config_file_name.rindex('.')][config_file_name.rindex('/')+1:].replace('_', '-'),
+            short_hash
+        )
+    )
+    print('\\configfile{{{}}}{{{}}}'.format(hash, config_file_name.replace('_', '\\_')))
+    print(p.comments)
+    print('\\end{model}')
 
 
 def emailer_from_file(f) -> Union[EMailer, None]:
@@ -766,3 +783,7 @@ if __name__ == '__main__':
 
         if '-r' in sys.argv or '--run' in sys.argv:
             execute(project, folder, config_filename, emailer, mail_params)
+
+        file_generation = list(filter(lambda arg: arg.startswith('--file='), sys.argv))
+        if len(file_generation) == 1:
+            generate_file(project, path, file_generation[0][7:])
