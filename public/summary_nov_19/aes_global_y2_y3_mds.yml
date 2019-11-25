@@ -21,16 +21,16 @@ requirements:
     version: 1.8
 path: '{FILE}/src'
 shortcuts:
-  gradle_conf: 'build_aes.gradle'
+  gradle_conf: 'build_exp.gradle'
   gradle_task: 'jar'
-  exec: 'AES-1.0-SNAPSHOT.jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
   build: '{PROJECT}/build/libs'
   jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
   java: 'java {jvm_args} -jar'
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 14343ad22452d30bd9a666b392a8302d26324742
+  commit: c9262a10341cb944bd4e433e31daf104c2a68a4b
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec}'
 experiments:
