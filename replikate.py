@@ -609,10 +609,6 @@ def execute(
                     if skip_next:
                         break
 
-                with open(summary, 'a+') as summary_csv:
-                    summary_csv.write(CSV.row(p, experiment, exp_folder + '/0.csv', times))
-                    summary_csv.close()
-
                 if email_args['frequency'] == 'each' and emailer is not None:
                     emailer.send_mail(
                         email_args['to'],
@@ -621,11 +617,15 @@ def execute(
                         '<h1>' + experiment.name + '</h1>' +
                         '<table>' +
                         HTML.header(p) +
-                        HTML.row(p, experiment, exp_folder + '/0.csv', times) +
+                        HTML.row(p, experiment, exp_folder + '/' + str(i) + '.csv', times) +
                         '</table>'
                         '</body></html>',
                         []
                     )
+
+            with open(summary, 'a+') as summary_csv:
+                summary_csv.write(CSV.row(p, experiment, exp_folder + '/0.csv', times))
+                summary_csv.close()
 
     files = []
     if 'summary' in email_args['attach']:
