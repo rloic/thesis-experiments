@@ -719,7 +719,9 @@ if __name__ == '__main__':
     path: str = sys.argv[1]
     if path.startswith("url="):
         print('>> Loading remote configuration')
-        repo = path[5:path.index(']')-1]
+        repo = path[5:path.index(']')]
+        if repo[-1] == '/':
+            repo = repo[:-1]
         path = path[path.index(']')+1:]
         if os.path.exists(path):
             print('  The file {} already exist, would you erase it ? [y/N]:'.format(path), end='')
