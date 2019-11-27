@@ -8,6 +8,7 @@ import shutil
 import smtplib
 import ssl
 import subprocess
+import urllib.request
 from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
@@ -716,6 +717,23 @@ def clean_mail_args(s: str) -> (str, str):
 
 if __name__ == '__main__':
     path: str = sys.argv[1]
+    if path.startswith("url="):
+        print('>> Loading remote configuration')
+        repo = path[5:path.index(']')-1]
+        path = path[path.index(']')+1:]
+        if os.path.exists(path):
+            print('  The file {} already exist, would you erase it ? [y/N]:'.format(path), end='')
+            text = input()
+            while text not in ["", "y", "Y", "n", "N"]:
+                text = input()
+            if text in ['y', 'Y']:
+                urllib.request.urlretrieve(repo + '/' + path, path)
+            else:
+                print('  Loading aborted, the script will use the local file')
+        else:
+            urllib.request.urlretrieve(repo + '/' + path, path)
+        print('<< Loading remote configuration')
+
     folder = path[:path.rindex('.')]
     config_filename = folder[folder.rindex('/') + 1:]
 
