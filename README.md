@@ -53,6 +53,23 @@ Heuristic splits : [$\Delta$SBoxes, abstractVars*]
     139, pp.24-29
 ```
 
+### Running a specific configuration
+
+To run a specific configuration (given with a commit hash)
+
+```bash
+./replikate.py url=[https://raw.githubusercontent.com/rloic/thesis-experiments/'HASH'/]'FILE_PATH' -g -b -r # Without the '
+```
+
+The `[]` is use to separate the host from the path. The file will be downloaded under `./FILE_PATH`.
+
+Example:
+
+```bash
+./replikate.py url=[https://raw.githubusercontent.com/rloic/thesis-experiments/f1e21d7cf0940d3a239bb3310035336fe1324d09]public/summary_nov_19/aes_global_y2_y3_mds.yml -g -b -r
+```
+
 ## Folders
+
 When an experiment is performed, a new folder is created with the name of the experiment file. Ex: `my_conf.yml` will create a new folder `my_conf` at the same path.
-The source files will be downloaded under `my_conf/src` and the results files will be printed under `my_conf/results`. A summary csv will be avaible at the root of the results folder, and foreach experiment a new folder will be printed with the log of the run. The _lock files are only used to prevent the reexecution of the same experiment when the script is launched multiple times.
+The source files will be downloaded under `my_conf/src` and the results files will be printed under `my_conf/results`. A summary csv will be available at the root of the results folder, and for each experiment a new folder will be printed with the log of the run. The _lock files are only used to prevent the re-execution of the same experiment when the script is launched multiple times.
