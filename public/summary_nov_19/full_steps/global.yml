@@ -1,0 +1,78 @@
+---
+comments: |
+  Model: AES Global using \textit{abstractXOR} constraint \\
+  NbActives ordering: Alternate \\
+  Heuristic: Dom/WDeg + Adaptation of Dom/WDeg for $\Delta$SBoxes and xor vars. \\
+    Dom/Wdeg is used for nbActives and realisation vars split (see below). The Adaptation of Dom/WDeg is used for the
+    $\Delta$SBoxes split and the abstractVars split.
+    The WDeg implementation is an adaptation of Dom/WDeg that fit to the abstractXOR constraint. In this way, the global
+    constraint is considered by the strategy as a set of xor equations instead of a global one. This improves the weights
+  Heuristic split:
+  \begin{itemize}
+    \item nbActives: The number of active sBoxes for each round $i$
+    \item $\Delta$SBoxes: The abstraction of the sBoxes
+    \item abstractVars: The rest of the abstraction of the AES problem; Z, and WK ($\Delta$X == $\Delta$SX == permutation($\Delta$Y)
+    \item probabilities: The probabilities linked to the SBoxes
+    \item $\delta$SBoxes: The concrete value (byte level) of the sBoxes
+    \item variables that require instantiation: $\delta$PlainText, $\delta$CipherText, $\delta$X, $\delta$SX, $\delta$Y, $\delta$Z and $\delta$WK.
+  \end{itemize}
+  Remark: \\
+    The advanced MDS property is enabled by the variables are not as a part of the strategy search. It's allow to cut the search quicker.
+    The mixcolumn is implemented by Y2\_Y3, the MDS property and the advanced MDS property.
+    We do not use the reverse matrix to compute $Y_i[j][k]$ from $Z_i[j][k]$.
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+path: '{FILE}/src'
+shortcuts:
+  gradle_conf: 'build_exp.gradle'
+  gradle_task: 'jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -jar'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: dd133732a5db9462d7fa59a0793119ef6ca086fe
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec}'
+experiments:
+# AES 128
+  - name: AES128-3-5
+    parameters: [version=AES-128, r=3, sb=5, heuristic=Custom, order=Alternate, restarts=0]
+  - name: AES128-4-12
+    parameters: [version=AES-128, r=4, sb=12, heuristic=Custom, order=Alternate, restarts=0]
+    level: 1
+# AES 192
+  - name: AES192-3-1
+    parameters: [version=AES-192, r=3, sb=1, heuristic=Custom, order=Alternate, restarts=0]
+  - name: AES192-4-4
+    parameters: [version=AES-192, r=4, sb=4, heuristic=Custom, order=Alternate, restarts=0]
+  - name: AES192-5-5
+    parameters: [version=AES-192, r=5, sb=5, heuristic=Custom, order=Alternate, restarts=0]
+  - name: AES192-6-10
+    parameters: [version=AES-192, r=6, sb=10, heuristic=Custom, order=Alternate, restarts=0]
+    level: 1
+# AES 256
+  - name: AES256-3-1
+    parameters: [version=AES-256, r=3, sb=1, heuristic=Custom, order=Alternate, restarts=0]
+  - name: AES256-4-3
+    parameters: [version=AES-256, r=4, sb=3, heuristic=Custom, order=Alternate, restarts=0]
+  - name: AES256-5-3
+    parameters: [version=AES-256, r=5, sb=3, heuristic=Custom, order=Alternate, restarts=0]
+  - name: AES256-6-5
+    parameters: [version=AES-256, r=6, sb=5, heuristic=Custom, order=Alternate, restarts=0]
+  - name: AES256-7-5
+    parameters: [version=AES-256, r=7, sb=5, heuristic=Custom, order=Alternate, restarts=0]
+  - name: AES256-8-10
+    parameters: [version=AES-256, r=8, sb=10, heuristic=Custom, order=Alternate, restarts=0]
+    level: 1
+measures: ['p', '#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 45
+  unit: MINUTES
