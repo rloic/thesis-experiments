@@ -1,0 +1,74 @@
+---
+comments: |
+  ## AES Step 1
+
+  Model: AES Global using *abstractXOR* constraint
+
+  NbActives ordering : alternatives (nbActives[len-1], nbActives[0], nbActives[len-2], nbActives[1], ...)
+
+  Heuristic : Dom/WDeg (standard version)
+
+  Heuristic splits : [nbActives, $\Delta$SBoxes, abstractVars*]
+  *abstractVars = [$\Delta$PlainText, $\Delta$CipherText, $\Delta Y$, $\Delta Z$] and $\Delta Y$ are a combination of $\Delta$SBoxes.
+
+  Parameters :
+
+  - [x] $\Delta Y2$, $\Delta Y3$
+  - [ ] MDS
+  - [ ] Advanced MDS
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+path: '{FILE}/src'
+shortcuts:
+  gradle_conf: 'build_aes.gradle'
+  gradle_task: 'jar'
+  exec: 'AES-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -jar'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: f0e016fcff1291c80beb6f775f944753dbdc1cab
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec}'
+experiments:
+# AES 128
+  - name: AES128-3-5
+    parameters: [version=AES-128, r=3, sb=5, heuristic=dom-wdeg, ordering=alternate, restarts=0, enableY2_Y3=true, enable_mds=false, enable_advanced_mds=false]
+  - name: AES128-4-12
+    parameters: [version=AES-128, r=4, sb=12, heuristic=dom-wdeg, ordering=alternate, restarts=0, enableY2_Y3=true, enable_mds=false, enable_advanced_mds=false]
+    level: 1
+# AES 192
+  - name: AES192-3-1
+    parameters: [version=AES-192, r=3, sb=1, heuristic=dom-wdeg, ordering=alternate, restarts=0, enableY2_Y3=true, enable_mds=false, enable_advanced_mds=false]
+  - name: AES192-4-4
+    parameters: [version=AES-192, r=4, sb=4, heuristic=dom-wdeg, ordering=alternate, restarts=0, enableY2_Y3=true, enable_mds=false, enable_advanced_mds=false]
+  - name: AES192-5-5
+    parameters: [version=AES-192, r=5, sb=5, heuristic=dom-wdeg, ordering=alternate, restarts=0, enableY2_Y3=true, enable_mds=false, enable_advanced_mds=false]
+  - name: AES192-6-10
+    parameters: [version=AES-192, r=6, sb=10, heuristic=dom-wdeg, ordering=alternate, restarts=0, enableY2_Y3=true, enable_mds=false, enable_advanced_mds=false]
+    level: 1
+# AES 256
+  - name: AES256-3-1
+    parameters: [version=AES-256, r=3, sb=1, heuristic=dom-wdeg, ordering=alternate, restarts=0, enableY2_Y3=true, enable_mds=false, enable_advanced_mds=false]
+  - name: AES256-4-3
+    parameters: [version=AES-256, r=4, sb=3, heuristic=dom-wdeg, ordering=alternate, restarts=0, enableY2_Y3=true, enable_mds=false, enable_advanced_mds=false]
+  - name: AES256-5-3
+    parameters: [version=AES-256, r=5, sb=3, heuristic=dom-wdeg, ordering=alternate, restarts=0, enableY2_Y3=true, enable_mds=false, enable_advanced_mds=false]
+  - name: AES256-6-5
+    parameters: [version=AES-256, r=6, sb=5, heuristic=dom-wdeg, ordering=alternate, restarts=0, enableY2_Y3=true, enable_mds=false, enable_advanced_mds=false]
+  - name: AES256-7-5
+    parameters: [version=AES-256, r=7, sb=5, heuristic=dom-wdeg, ordering=alternate, restarts=0, enableY2_Y3=true, enable_mds=false, enable_advanced_mds=false]
+  - name: AES256-8-10
+    parameters: [version=AES-256, r=8, sb=10, heuristic=dom-wdeg, ordering=alternate, restarts=0, enableY2_Y3=true, enable_mds=false, enable_advanced_mds=false]
+    level: 1
+measures: ['#s', '#dc'] #s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 45
+  unit: MINUTES

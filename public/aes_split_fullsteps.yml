@@ -1,0 +1,164 @@
+---
+comments: |
+  ## AES Truncated differential resolution
+  Xors over abstract domain are implemented using the global constraint abstractXOR.
+  The search heuristic is:
+    - Dom/WDeg(nbActives)
+    - Dom/WDeg(ΔSBoxes) # abstract values
+    - Dom/WDeg(abstract variables) # other than the ΔSBoxes
+    - Dom/WDeg(probabilities)
+    - Dom/WDeg(δSBoxes) # byte values
+    - Dom/WDeg(others)
+  The Dom/WDeg is a modified version of the default Dom/WDeg heuristic implemented in Choco. When a contradiction
+  is raised by the abstractXOR constraint, we increase the weight of the contradiction variable by incrementing all the
+  weight of its propagators (the weights are increased by 1). If the contradiction is raised by another propagator we increment its weight of 5. 
+  MixColumn is handled by using the fact that (ΔY != false) <=> (2 * ΔY != false) <=> (3 * ΔY != false)
+  We also add the MDS property using the constraint C'12 of [1]:
+    \forall{i_1, i_2} \in [0, Nr - 2], \forall{k_1, k_2} \in [0, 3]\\
+    ~~\sum_{j=0}^{3}{diff_{\delta Y_{i_1}[j][k_1], \delta Y_{i_2}[j][k_2]} + diff_{\delta Z_{i_1}[j][k_1], \delta Z_{i_2}[j][k_2]}} \in \{0, 5, 6, 7, 8\}
+  [1] David Gérault, Pascal Lafourcade, Marine Minier, Christine Solnon. 
+  Computing AES related-key differential characteristics with constraint programming. 
+  Artificial Intelligence, Elsevier, 2020, 278, pp.103183. 
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+path: '{FILE}/src'
+shortcuts:
+  gradle_conf: 'build_wip.gradle'
+  gradle_task: 'jar'
+  exec: 'AppWip-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -jar'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: fa99113efc22024470eaf9b9eaf374053b451044
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec}'
+experiments:
+# AES 128
+  - name: AES128-3-5-global
+    parameters: [AES-128, 3, 5, global]
+  - name: AES128-3-5-advanced
+    parameters: [AES-128, 3, 5, advanced]
+  - name: AES128-4-12-global
+    parameters: [AES-128, 4, 12, global]
+    level: 2
+  - name: AES128-4-12
+    parameters: [AES-128, 4, 12, advanced]
+    level: 2
+  - name: AES128-5-17-global
+    parameters: [AES-128, 5, 17, global]
+    level: 3
+  - name: AES128-5-17
+    parameters: [AES-128, 5, 17, advanced]
+    level: 3
+# AES 192
+  - name: AES192-3-1-global
+    parameters: [AES-192, 3, 1, global]
+  - name: AES192-3-1-advanced
+    parameters: [AES-192, 3, 1, advanced]
+  - name: AES192-4-4-global
+    parameters: [AES-192, 4, 4, global]
+  - name: AES192-4-4-advanced
+    parameters: [AES-192, 4, 4, advanced]
+  - name: AES192-5-5-global
+    parameters: [AES-192, 5, 5, global]
+  - name: AES192-5-5-advanced
+    parameters: [AES-192, 5, 5, advanced]
+  - name: AES192-6-10-global
+    parameters: [AES-192, 6, 10, global]
+    level: 1
+  - name: AES192-6-10-advanced
+    parameters: [AES-192, 6, 10, advanced]
+    level: 1
+  - name: AES192-7-13-global
+    parameters: [AES-192, 7, 13, global]
+    level: 1
+  - name: AES192-7-13-advanced
+    parameters: [AES-192, 7, 13, advanced]
+    level: 1
+  - name: AES192-8-18-global
+    parameters: [AES-192, 8, 18, global]
+    level: 2
+  - name: AES192-8-18-advanced
+    parameters: [AES-192, 8, 18, advanced]
+    level: 2
+  - name: AES192-9-24-global
+    parameters: [AES-192, 9, 24, global]
+    level: 2
+  - name: AES192-9-24-advanced
+    parameters: [AES-192, 9, 24, advanced]
+    level: 2
+# AES 256
+  - name: AES256-3-1-global
+    parameters: [AES-256, 3, 1, global]
+  - name: AES256-3-1-advanced
+    parameters: [AES-256, 3, 1, advanced]
+  - name: AES256-4-3-global
+    parameters: [AES-256, 4, 3, global]
+  - name: AES256-4-3-advanced
+    parameters: [AES-256, 4, 3, advanced]
+  - name: AES256-5-3-global
+    parameters: [AES-256, 5, 3, global]
+  - name: AES256-5-3-advanced
+    parameters: [AES-256, 5, 3, advanced]
+  - name: AES256-6-5-global
+    parameters: [AES-256, 6, 5, global]
+  - name: AES256-6-5-advanced
+    parameters: [AES-256, 6, 5, advanced]
+  - name: AES256-7-5-global
+    parameters: [AES-256, 7, 5, global]
+  - name: AES256-7-5-advanced
+    parameters: [AES-256, 7, 5, advanced]
+  - name: AES256-8-10-global
+    parameters: [AES-256, 8, 10, global]
+    level: 1
+  - name: AES256-8-10-advanced
+    parameters: [AES-256, 8, 10, advanced]
+    level: 1
+  - name: AES256-9-15-global
+    parameters: [AES-256, 9, 15, global]
+    level: 1
+  - name: AES256-9-15-advanced
+    parameters: [AES-256, 9, 15, advanced]
+    level: 1
+  - name: AES256-10-16-global
+    parameters: [AES-256, 10, 16, global]
+    level: 2
+  - name: AES256-10-16-advanced
+    parameters: [AES-256, 10, 16, advanced]
+    level: 2
+  - name: AES256-11-20-global
+    parameters: [AES-256, 11, 20, global]
+    level: 2
+  - name: AES256-11-20-advanced
+    parameters: [AES-256, 11, 20, advanced]
+    level: 2
+  - name: AES256-12-20-global
+    parameters: [AES-256, 12, 20, global]
+    level: 2
+  - name: AES256-12-20-advanced
+    parameters: [AES-256, 12, 20, advanced]
+    level: 2
+  - name: AES256-13-24-global
+    parameters: [AES-256, 13, 24, global]
+    level: 2
+  - name: AES256-13-24-advanced
+    parameters: [AES-256, 13, 24, advanced]
+    level: 2
+  - name: AES256-14-24-global
+    parameters: [AES-256, 14, 24, global]
+    level: 2
+  - name: AES256-14-24-advanced
+    parameters: [AES-256, 14, 24, advanced]
+    level: 2
+measures: ['p', '#dc'] # p = probability, #s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 12
+  unit: HOURS

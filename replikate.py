@@ -8,6 +8,7 @@ import shutil
 import smtplib
 import ssl
 import subprocess
+import urllib.request
 from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
@@ -161,32 +162,33 @@ class EMailer:
     def send_mail(self, receivers: List[str], subject: str, message: str, files: List[Tuple[str, str]] = []):
         if self.server_parameters.authentication == 'STARTTLS':
             context = ssl.create_default_context()
-            with smtplib.SMTP(self.server_parameters.host, self.server_parameters.port) as smtp:
-                smtp.starttls(context=context)
-                smtp.login(
-                    self.mail_account.user_name,
-                    self.pwd
-                )
-                mail = MIMEMultipart()
-                mail['From'] = self.mail_account.mail
-                mail['To'] = ', '.join(receivers)
-                mail['Date'] = formatdate(localtime=True)
-                mail['Subject'] = subject
-                mail.attach(MIMEText(message, 'html'))
-                for (f, name) in files:
-                    part = MIMEBase('application', 'octet-stream')
-                    part.set_payload(open(f, 'rb').read())
-                    encoders.encode_base64(part)
-                    part.add_header('Content-Disposition', 'piece; filename= %s' % name)
-                    mail.attach(part)
-                try:
+            try:
+                with smtplib.SMTP(self.server_parameters.host, self.server_parameters.port) as smtp:
+                    smtp.starttls(context=context)
+                    smtp.login(
+                        self.mail_account.user_name,
+                        self.pwd
+                    )
+                    mail = MIMEMultipart()
+                    mail['From'] = self.mail_account.mail
+                    mail['To'] = ', '.join(receivers)
+                    mail['Date'] = formatdate(localtime=True)
+                    mail['Subject'] = subject
+                    mail.attach(MIMEText(message, 'html'))
+                    for (f, name) in files:
+                        part = MIMEBase('application', 'octet-stream')
+                        part.set_payload(open(f, 'rb').read())
+                        encoders.encode_base64(part)
+                        part.add_header('Content-Disposition', 'piece; filename= %s' % name)
+                        mail.attach(part)
+
                     smtp.sendmail(
                         self.mail_account.mail,
                         receivers,
                         mail.as_string()
                     )
-                except Exception as e:
-                    print(e)
+            except smtplib.SMTPException as e:
+                print('Cannot send email')
 
 
 def versioning_from_yml(yml) -> Versioning:
@@ -608,18 +610,19 @@ def execute(
                     if skip_next:
                         break
 
-            if email_args['frequency'] == 'each' and emailer is not None:
-                emailer.send_mail(
-                    email_args['to'],
-                    'Experiment {} end'.format(experiment.name),
-                    '<html><body>'
-                    '<h1>' + experiment.name + '</h1>' +
-                    '<table>' +
-                    HTML.header(p) +
-                    HTML.row(p, experiment, exp_folder + '/0.csv', times) +
-                    '</table>'
-                    '</body></html>',
-                )
+                if email_args['frequency'] == 'each' and emailer is not None:
+                    emailer.send_mail(
+                        email_args['to'],
+                        'Experiment {} end'.format(experiment.name),
+                        '<html><body>'
+                        '<h1>' + experiment.name + '</h1>' +
+                        '<table>' +
+                        HTML.header(p) +
+                        HTML.row(p, experiment, exp_folder + '/' + str(i) + '.csv', times) +
+                        '</table>'
+                        '</body></html>',
+                        []
+                    )
 
             with open(summary, 'a+') as summary_csv:
                 summary_csv.write(CSV.row(p, experiment, exp_folder + '/0.csv', times))
@@ -644,6 +647,23 @@ def execute(
         )
 
     print('<< Running experiments')
+
+
+def generate_file(p: Project, config_file_name: str, model: str):
+    hash = subprocess.check_output('git rev-parse --verify HEAD'.split(' '))
+    hash = hash.decode('UTF-8').replace('\n', '')
+    short_hash = hash[:6]
+    print('\\begin{{model}}[{} {}] \\label{{md:{}:{}}}'
+        .format(
+            model.replace('_', ' '),
+            short_hash,
+            config_file_name[:config_file_name.rindex('.')][config_file_name.rindex('/')+1:].replace('_', '-'),
+            short_hash
+        )
+    )
+    print('\\configfile{{{}}}{{{}}}'.format(hash, config_file_name.replace('_', '\\_')))
+    print(p.comments)
+    print('\\end{model}')
 
 
 def emailer_from_file(f) -> Union[EMailer, None]:
@@ -697,6 +717,23 @@ def clean_mail_args(s: str) -> (str, str):
 
 if __name__ == '__main__':
     path: str = sys.argv[1]
+    if path.startswith("url="):
+        print('>> Loading remote configuration')
+        repo = path[5:path.index(']')-1]
+        path = path[path.index(']')+1:]
+        if os.path.exists(path):
+            print('  The file {} already exist, would you erase it ? [y/N]:'.format(path), end='')
+            text = input()
+            while text not in ["", "y", "Y", "n", "N"]:
+                text = input()
+            if text in ['y', 'Y']:
+                urllib.request.urlretrieve(repo + '/' + path, path)
+            else:
+                print('  Loading aborted, the script will use the local file')
+        else:
+            urllib.request.urlretrieve(repo + '/' + path, path)
+        print('<< Loading remote configuration')
+
     folder = path[:path.rindex('.')]
     config_filename = folder[folder.rindex('/') + 1:]
 
@@ -764,3 +801,7 @@ if __name__ == '__main__':
 
         if '-r' in sys.argv or '--run' in sys.argv:
             execute(project, folder, config_filename, emailer, mail_params)
+
+        file_generation = list(filter(lambda arg: arg.startswith('--file='), sys.argv))
+        if len(file_generation) == 1:
+            generate_file(project, path, file_generation[0][7:])
