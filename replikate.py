@@ -536,7 +536,7 @@ def execute(
             times = [0 for _ in range(project.iterations)]
 
             for i in range(project.iterations):
-                log_filename = exp_folder + '/' + str(i) + '.csv'
+                log_filename = exp_folder + '/' + str(i) + '.log'
 
                 timeout = None
                 if project.timeout is not None:
@@ -574,10 +574,10 @@ def execute(
                                 '<h1>' + experiment.name + '</h1>' +
                                 '<table>' +
                                 HTML.header(p) +
-                                HTML.row(p, experiment, exp_folder + '/' + str(i) + '.csv', times) +
+                                HTML.row(p, experiment, exp_folder + '/' + str(i) + '.log', times) +
                                 '</table>'
                                 '</body></html>',
-                                files=[(exp_folder + '/' + str(i) + '.csv', 'log')]
+                                files=[(exp_folder + '/' + str(i) + '.log', 'log')]
                             )
                             if email_args['on_timeout'] == 'first':
                                 email_args['on_timeout'] = 'never'
@@ -597,10 +597,10 @@ def execute(
                                 '<h1>' + experiment.name + '</h1>' +
                                 '<table>' +
                                 HTML.header(p) +
-                                HTML.row(p, experiment, exp_folder + '/' + str(i) + '.csv', times) +
+                                HTML.row(p, experiment, exp_folder + '/' + str(i) + '.log', times) +
                                 '</table>'
                                 '</body></html>',
-                                files=[(exp_folder + '/' + str(i) + '.csv', 'log')]
+                                files=[(exp_folder + '/' + str(i) + '.log', 'log')]
                             )
                             if email_args['on_failure'] == 'first':
                                 email_args['on_failure'] = 'never'
@@ -618,14 +618,14 @@ def execute(
                         '<h1>' + experiment.name + '</h1>' +
                         '<table>' +
                         HTML.header(p) +
-                        HTML.row(p, experiment, exp_folder + '/' + str(i) + '.csv', times) +
+                        HTML.row(p, experiment, exp_folder + '/' + str(i) + '.log', times) +
                         '</table>'
                         '</body></html>',
                         []
                     )
 
             with open(summary, 'a+') as summary_csv:
-                summary_csv.write(CSV.row(p, experiment, exp_folder + '/0.csv', times))
+                summary_csv.write(CSV.row(p, experiment, exp_folder + '/0.log', times))
                 summary_csv.close()
 
     files = []
