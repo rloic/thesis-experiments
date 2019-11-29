@@ -4,22 +4,23 @@ comments: |
   NbActives ordering: Alternate \\
   Heuristic: Dom/WDeg + Adaptation of Dom/WDeg for $\Delta$SBoxes and xor vars. \\
     Dom/Wdeg is used for nbActives and realisation vars split (see below). The Adaptation of Dom/WDeg is used for the
-    $\Delta$SBoxes split and the abstractVars split.
+    $\Delta$SBoxes split, the abstractVars split and the abstract xor vars split.
     The WDeg implementation is an adaptation of Dom/WDeg that fit to the abstractXOR constraint. In this way, the global
     constraint is considered by the strategy as a set of xor equations instead of a global one. This improves the weights
   Heuristic split:
   \begin{itemize}
     \item nbActives: The number of active sBoxes for each round $i$
     \item $\Delta$SBoxes: The abstraction of the sBoxes
-    \item abstractVars: The rest of the abstraction of the AES problem; Z, and WK ($\Delta$X == $\Delta$SX == permutation($\Delta$Y)
+    \item abstractVars: The abstract vars, the problem abstraction variables ($\Delta Z$ and $\Delta WK$)
+    \item abstractXorVars: The variables that belong to the global xor constraint
     \item probabilities: The probabilities linked to the SBoxes
     \item $\delta$SBoxes: The concrete value (byte level) of the sBoxes
     \item variables that require instantiation: $\delta$PlainText, $\delta$CipherText, $\delta$X, $\delta$SX, $\delta$Y, $\delta$Z and $\delta$WK.
   \end{itemize}
   Remark: \\
-    The advanced MDS property is enabled by the variables are not as a part of the strategy search. It's allow to cut the search quicker.
-    The mixcolumn is implemented by Y2\_Y3, the MDS property and the advanced MDS property.
-    We do not use the reverse matrix to compute $Y_i[j][k]$ from $Z_i[j][k]$.
+    Advanced mds is enable for AES-3-5 to avoid massive exploration of the concrete part of the search tree. The reverse mix column
+    operation is used as the mds property. For advanced MDS, we limit the number of interation by setting LIMIT_ADVANCED_MDS_GENERATION=4.
+    This parameter indicates that advanced mds is enabled for the first four rounds.
 requirements:
   - name: gradle
     version: 4.9
@@ -36,43 +37,75 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: dd133732a5db9462d7fa59a0793119ef6ca086fe
+  commit: f5057ac4b90c43836ffd119742e1a0400adbb63c
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec}'
 experiments:
 # AES 128
   - name: AES128-3-5
-    parameters: [version=AES-128, r=3, sb=5, heuristic=Custom, order=Alternate, restarts=0]
+    parameters: [version=AES-128, r=3, sb=5, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1]
   - name: AES128-4-12
-    parameters: [version=AES-128, r=4, sb=12, heuristic=Custom, order=Alternate, restarts=0]
+    parameters: [version=AES-128, r=4, sb=12, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1]
     level: 1
+  - name: AES128-5-17
+    parameters: [version=AES-128, r=5, sb=17, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1]
+    level: 2
 # AES 192
   - name: AES192-3-1
-    parameters: [version=AES-192, r=3, sb=1, heuristic=Custom, order=Alternate, restarts=0]
+    parameters: [version=AES-192, r=3, sb=1, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1]
   - name: AES192-4-4
-    parameters: [version=AES-192, r=4, sb=4, heuristic=Custom, order=Alternate, restarts=0]
+    parameters: [version=AES-192, r=4, sb=4, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1]
   - name: AES192-5-5
-    parameters: [version=AES-192, r=5, sb=5, heuristic=Custom, order=Alternate, restarts=0]
+    parameters: [version=AES-192, r=5, sb=5, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1]
   - name: AES192-6-10
-    parameters: [version=AES-192, r=6, sb=10, heuristic=Custom, order=Alternate, restarts=0]
+    parameters: [version=AES-192, r=6, sb=10, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
+  - name: AES192-7-13
+    parameters: [version=AES-192, r=7, sb=13, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
     level: 1
+  - name: AES192-8-18
+    parameters: [version=AES-192, r=8, sb=18, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
+    level: 1
+  - name: AES192-9-24
+    parameters: [version=AES-192, r=9, sb=24, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
+    level: 2
+  - name: AES192-10-27
+    parameters: [version=AES-192, r=9, sb=24, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
+    level: 2
 # AES 256
   - name: AES256-3-1
-    parameters: [version=AES-256, r=3, sb=1, heuristic=Custom, order=Alternate, restarts=0]
+    parameters: [version=AES-256, r=3, sb=1, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1]
   - name: AES256-4-3
-    parameters: [version=AES-256, r=4, sb=3, heuristic=Custom, order=Alternate, restarts=0]
+    parameters: [version=AES-256, r=4, sb=3, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1]
   - name: AES256-5-3
-    parameters: [version=AES-256, r=5, sb=3, heuristic=Custom, order=Alternate, restarts=0]
+    parameters: [version=AES-256, r=5, sb=3, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1]
   - name: AES256-6-5
-    parameters: [version=AES-256, r=6, sb=5, heuristic=Custom, order=Alternate, restarts=0]
+    parameters: [version=AES-256, r=6, sb=5, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
   - name: AES256-7-5
-    parameters: [version=AES-256, r=7, sb=5, heuristic=Custom, order=Alternate, restarts=0]
+    parameters: [version=AES-256, r=7, sb=5, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
   - name: AES256-8-10
-    parameters: [version=AES-256, r=8, sb=10, heuristic=Custom, order=Alternate, restarts=0]
+    parameters: [version=AES-256, r=8, sb=10, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
     level: 1
+  - name: AES256-9-15
+    parameters: [version=AES-256, r=9, sb=15, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
+    level: 1
+  - name: AES256-10-16
+    parameters: [version=AES-256, r=10, sb=16, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
+    level: 1
+  - name: AES256-11-20
+    parameters: [version=AES-256, r=11, sb=20, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
+    level: 2
+  - name: AES256-12-20
+    parameters: [version=AES-256, r=12, sb=20, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
+    level: 2
+  - name: AES256-13-24
+    parameters: [version=AES-256, r=13, sb=24, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
+    level: 2
+  - name: AES256-14-24
+    parameters: [version=AES-256, r=14, sb=24, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=4]
+    level: 2
 measures: ['p', '#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
 stats: [time]
 iterations: 1
 timeout:
-  duration: 45
-  unit: MINUTES
+  duration: 48
+  unit: HOURS

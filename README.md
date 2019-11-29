@@ -5,6 +5,7 @@
 - java >= 1.8
 
 ## How to run
+**The replikate script is now located at: [https://www.github.com/rloic/replikate]()**
 The execution is simple, open a terminal at the root of the repository and run:
 ```bash
 ./replikate.py path_to_config.yml -g -b -r
