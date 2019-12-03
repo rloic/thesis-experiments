@@ -22,6 +22,11 @@ comments: |
     number of active sboxes is not bounded by nbActives[i].
   Version note: \\
     Improve heuristic (better performance in both times and nodes)
+    !! IMPORTANT !! The actives sboxes that belong to $WK_{Nr}$ are not counted anymore. This is due to the fact that CipherText
+    can be modified to minimise all the sBoxes present in the last $WK$ [1]. \\
+  [1] Gerault, David, Pascal Lafourcade, Marine Minier, et Christine Solnon. \\
+  « Computing AES Related-Key Differential Characteristics with Constraint Programming ». \\
+  Artificial Intelligence 278 (janvier 2020): 103183. https://doi.org/10.1016/j.artint.2019.103183.
 requirements:
   - name: gradle
     version: 4.9
@@ -38,7 +43,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: f48feea68d5231fc3984f3b6f39bbf80570d9584
+  commit: 73bf9a648dba6978ca34a85a294d3435791bb064
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec}'
 experiments:
@@ -85,7 +90,6 @@ experiments:
     parameters: [version=AES-256, r=7, sb=5, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=0]
   - name: AES256-8-10
     parameters: [version=AES-256, r=8, sb=10, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=0]
-    level: 1
   - name: AES256-9-15
     parameters: [version=AES-256, r=9, sb=15, heuristic=Custom, order=Alternate, restarts=0, ENABLE_MDS=1, ENABLE_REVERSE_MC=1, ENABLE_ADVANCED_MDS=0]
     level: 1
