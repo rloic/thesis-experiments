@@ -1,0 +1,72 @@
+---
+comments: |
+  Execution of D. Gerault model of truncated differential attack against AES [1]. \\
+  [1] Gerault, David, Pascal Lafourcade, Marine Minier, et Christine Solnon. \\
+  "Computing AES Related-Key Differential Characteristics with Constraint Programming". \\
+  Artificial Intelligence 278 (janvier 2020): 103183. https://doi.org/10.1016/j.artint.2019.103183.
+requirements:
+  - name: java
+    version: 1.8
+  - name: python
+    version: 3.6
+path: '{FILE}/src'
+versioning:
+  repository: https://github.com/rloic/aes-cryptanalysis-cp-xor-2019
+compile: 'python3 {PROJECT}/init.py'
+execute: 'python3 {PROJECT}/run.py'
+experiments:
+# AES 128
+  - name: AES128-3-5
+    parameters: [128, 3, 5, S1XOR, shift, 2]
+  - name: AES128-4-12
+    parameters: [128, 4, 12, S1XOR, shift, 2]
+  - name: AES128-5-17
+    parameters: [128, 5, 17, S1XOR, shift, 2]
+# AES 192
+  - name: AES192-3-1
+    parameters: [192, 3, 1, S1XOR, shift, 2]
+  - name: AES192-4-4
+    parameters: [192, 4, 4, S1XOR, shift, 2]
+  - name: AES192-5-5
+    parameters: [192, 5, 5, S1XOR, shift, 2]
+  - name: AES192-6-10
+    parameters: [192, 6, 10, S1XOR, shift, 2]
+  - name: AES192-7-13
+    parameters: [192, 7, 13, S1XOR, shift, 2]
+  - name: AES192-8-18
+    parameters: [192, 8, 18, S1XOR, shift, 2]
+  - name: AES192-9-24
+    parameters: [192, 9, 24, S1XOR, shift, 2]
+  - name: AES192-10-29
+    parameters: [192, 10, 29, S1XOR, shift, 2]
+# AES 256
+  - name: AES256-3-1
+    parameters: [256, 3, 1, S1XOR, shift, 2]
+  - name: AES256-4-3
+    parameters: [256, 4, 3, S1XOR, shift, 2]
+  - name: AES256-5-3
+    parameters: [256, 5, 3, S1XOR, shift, 2]
+  - name: AES256-6-5
+    parameters: [256, 6, 5, S1XOR, shift, 2]
+  - name: AES256-7-5
+    parameters: [256, 7, 5, S1XOR, shift, 2]
+  - name: AES256-8-10
+    parameters: [256, 8, 10, S1XOR, shift, 2]
+  - name: AES256-9-15
+    parameters: [256, 9, 15, S1XOR, shift, 2]
+  - name: AES256-10-16
+    parameters: [256, 10, 16, S1XOR, shift, 2]
+  - name: AES256-11-20
+    parameters: [256, 11, 20, S1XOR, shift, 2]
+  - name: AES256-12-20
+    parameters: [256, 12, 20, S1XOR, shift, 2]
+  - name: AES256-13-24
+    parameters: [256, 13, 24, S1XOR, shift, 2]
+  - name: AES256-14-5
+    parameters: [256, 14, 24, S1Diff, shift, 2]
+measures: [skip, '#s', 'p', skip, skip, '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 48
+  unit: HOURS

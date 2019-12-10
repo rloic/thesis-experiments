@@ -3,5 +3,5 @@ server:
   port: 587 # SSL = 465, STARTTLS = 587
   authentication: STARTTLS # Remove this parameter if none, else valid options are SSL/TLS or STARTTLS
 mail_account:
-  username: lrouquette # the user account
-  mail: loic.rouquette@insa-lyon.fr # the mail address
+  username: user # the user account
+  mail: my.name@domain.com # the mail address

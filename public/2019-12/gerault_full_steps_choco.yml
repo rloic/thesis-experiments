@@ -1,0 +1,95 @@
+---
+comments: |
+  This model is a fusion of the steps 1 and 2 from [1]. The model is written is Choco and the step 1 is a raw
+  translation from MiniZinc to Choco.
+
+  [1] Gerault, David, Pascal Lafourcade, Marine Minier, et Christine Solnon. \\
+    « Computing AES Related-Key Differential Characteristics with Constraint Programming ». \\
+    Artificial Intelligence 278 (janvier 2020): 103183. https://doi.org/10.1016/j.artint.2019.103183.
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+path: '{FILE}/src'
+shortcuts:
+  gradle_conf: 'build_exp.gradle'
+  gradle_task: 'jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -jar'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: cee636fd011222d8de5f191ce061227b969fd4bc
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec}'
+experiments:
+# AES 128
+  - name: AES128-3-5
+    parameters: [version=AES-128, r=3, sb=5, heuristic=Dom_WDeg, order=Alternate]
+  - name: AES128-4-12
+    parameters: [version=AES-128, r=4, sb=12, heuristic=Dom_WDeg, order=Alternate]
+    level: 1
+  - name: AES128-5-17
+    parameters: [version=AES-128, r=5, sb=17, heuristic=Dom_WDeg, order=Alternate]
+    level: 2
+# AES 192
+  - name: AES192-3-1
+    parameters: [version=AES-192, r=3, sb=1, heuristic=Dom_WDeg, order=Alternate]
+  - name: AES192-4-4
+    parameters: [version=AES-192, r=4, sb=4, heuristic=Dom_WDeg, order=Alternate]
+  - name: AES192-5-5
+    parameters: [version=AES-192, r=5, sb=5, heuristic=Dom_WDeg, order=Alternate]
+  - name: AES192-6-10
+    parameters: [version=AES-192, r=6, sb=10, heuristic=Dom_WDeg, order=Alternate]
+  - name: AES192-7-13
+    parameters: [version=AES-192, r=7, sb=13, heuristic=Dom_WDeg, order=Alternate]
+    level: 1
+  - name: AES192-8-18
+    parameters: [version=AES-192, r=8, sb=18, heuristic=Dom_WDeg, order=Alternate]
+    level: 1
+  - name: AES192-9-24
+    parameters: [version=AES-192, r=9, sb=24, heuristic=Dom_WDeg, order=Alternate]
+    level: 2
+  - name: AES192-10-27
+    parameters: [version=AES-192, r=9, sb=24, heuristic=Dom_WDeg, order=Alternate]
+    level: 2
+# AES 256
+  - name: AES256-3-1
+    parameters: [version=AES-256, r=3, sb=1, heuristic=Dom_WDeg, order=Alternate]
+  - name: AES256-4-3
+    parameters: [version=AES-256, r=4, sb=3, heuristic=Dom_WDeg, order=Alternate]
+  - name: AES256-5-3
+    parameters: [version=AES-256, r=5, sb=3, heuristic=Dom_WDeg, order=Alternate]
+  - name: AES256-6-5
+    parameters: [version=AES-256, r=6, sb=5, heuristic=Dom_WDeg, order=Alternate]
+  - name: AES256-7-5
+    parameters: [version=AES-256, r=7, sb=5, heuristic=Dom_WDeg, order=Alternate]
+  - name: AES256-8-10
+    parameters: [version=AES-256, r=8, sb=10, heuristic=Dom_WDeg, order=Alternate]
+  - name: AES256-9-15
+    parameters: [version=AES-256, r=9, sb=15, heuristic=Dom_WDeg, order=Alternate]
+    level: 1
+  - name: AES256-10-16
+    parameters: [version=AES-256, r=10, sb=16, heuristic=Dom_WDeg, order=Alternate]
+    level: 1
+  - name: AES256-11-20
+    parameters: [version=AES-256, r=11, sb=20, heuristic=Dom_WDeg, order=Alternate]
+    level: 2
+  - name: AES256-12-20
+    parameters: [version=AES-256, r=12, sb=20, heuristic=Dom_WDeg, order=Alternate]
+    level: 2
+  - name: AES256-13-24
+    parameters: [version=AES-256, r=13, sb=24, heuristic=Dom_WDeg, order=Alternate]
+    level: 2
+  - name: AES256-14-24
+    parameters: [version=AES-256, r=14, sb=24, heuristic=Dom_WDeg, order=Alternate]
+    level: 2
+measures: ['p', '#s', '#dc'] #s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 48
+  unit: HOURS
