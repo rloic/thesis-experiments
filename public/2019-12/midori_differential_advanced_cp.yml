@@ -17,7 +17,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: f908dd135d1e027130ca6ecc65d21f313aeb7a62
+  commit: 9208e8b87f1ef6f0f6fa18f02ebc039713e83c90
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec}'
 experiments:
