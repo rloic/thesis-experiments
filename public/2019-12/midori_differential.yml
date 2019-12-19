@@ -1,0 +1,31 @@
+---
+comments: |
+  Model: Midori Global XOR \\
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+path: '{FILE}/src'
+shortcuts:
+  gradle_conf: 'build_exp.gradle'
+  gradle_task: 'jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -jar'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: f908dd135d1e027130ca6ecc65d21f313aeb7a62
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec}'
+experiments:
+  - name: "ALL"
+    parameters: [r=20, sb=320, INCREMENTAL=true]
+measures: ['p', '#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 48
+  unit: HOURS

@@ -62,7 +62,7 @@ experiments:
     parameters: [256, 12, 20, S1XOR, shift, 2]
   - name: AES256-13-24
     parameters: [256, 13, 24, S1XOR, shift, 2]
-  - name: AES256-14-5
+  - name: AES256-14-24
     parameters: [256, 14, 24, S1Diff, shift, 2]
 measures: [skip, '#s', 'p', skip, skip, '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
 stats: [time]
