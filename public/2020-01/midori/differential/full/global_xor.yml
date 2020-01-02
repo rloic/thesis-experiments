@@ -24,7 +24,7 @@ versioning:
   authentication: true
   commit: 31102c3869acde8ba4ddeeb117ca0838c79308d7
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
-execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.truncated.DifferentialKt'
+execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.concrete.DifferentialKt'
 experiments:
   - name: "Midori-64"
     parameters: [version=Midori-64, r=20, sb=32, heuristic=Custom, INCREMENTAL=true]

@@ -1,10 +1,7 @@
 ---
 comments: |
-  Model: Midori Global XOR \\
+  Model: Midori Advanced Model \\
   Note version: \\
-    Start values at the minimal value of the previous round \\
-    I had plain text and cipher text blocks to the problem resolution, global xor is able to perform stronger filtering
-    with this additionnal information.
     Add Midori 64 bits
 requirements:
   - name: gradle
@@ -22,14 +19,14 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 31102c3869acde8ba4ddeeb117ca0838c79308d7
+  commit: cd0579649984010eacaf30d5016dfbf22998f5ff
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.truncated.DifferentialKt'
 experiments:
   - name: "Midori-64"
-    parameters: [version=Midori-64, r=20, sb=32, heuristic=Custom, INCREMENTAL=true]
+    parameters: [version=Midori-64, r=20, sb=32, heuristic=Dom_WDeg, INCREMENTAL=true]
   - name: "Midori-128"
-    parameters: [version=Midori-128, r=20, sb=64, heuristic=Custom, INCREMENTAL=true]
+    parameters: [version=Midori-128, r=20, sb=64, heuristic=Dom_WDeg, INCREMENTAL=true]
 measures: []
 stats: [time]
 iterations: 1
