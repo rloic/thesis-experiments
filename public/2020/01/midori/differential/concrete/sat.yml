@@ -1,0 +1,40 @@
+---
+comments: |
+  Model: Midori Advanced Model (SAT) \\
+  Note version: \\
+    Add Midori 64 bits
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+  - name: python
+    version: 3.8
+path: '{FILE}/src'
+shortcuts:
+  dl_picat: 'python3 {PROJECT}/picat/download.py'
+  gradle_conf: 'build_exp.gradle'
+  gradle_task: 'jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -cp'
+  main_class: 'com.github.rloic.kt.midori.app.concrete.DifferentialSATKt'
+  PICAT_PATH: '{PROJECT}/picat'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: e820197d5cd8f54cf37066adea511723c6d7efa0
+compile: '{dl_picat} && gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec} {main_class}'
+experiments:
+  - name: "Midori-64"
+    parameters: [version=Midori-64, r=20, sb=32, INCREMENTAL=1, 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-128"
+    parameters: [version=Midori-128, r=20, sb=64, INCREMENTAL=1, 'PICAT_PATH={PICAT_PATH}']
+measures: []
+stats: [time]
+iterations: 1
+timeout:
+  duration: 24
+  unit: HOURS

@@ -19,9 +19,9 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: e66e511e950c726dcad25130332851cc569d52da
+  commit: c76598300b061db43d2c0093ada3908e250dbda4
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
-execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.truncated.DifferentialKt'
+execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.concrete.DifferentialKt'
 experiments:
   - name: "Midori-64"
     parameters: [model=Advanced, version=Midori-64, r=20, sb=32, heuristic=Dom_WDeg, INCREMENTAL=true]
@@ -31,5 +31,5 @@ measures: []
 stats: [time]
 iterations: 1
 timeout:
-  duration: 48
+  duration: 24
   unit: HOURS

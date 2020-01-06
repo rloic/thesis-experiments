@@ -19,12 +19,13 @@ shortcuts:
   build: '{PROJECT}/build/libs'
   jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
   java: 'java {jvm_args} -cp'
+  main_class: 'com.github.rloic.kt.midori.app.concrete.RelatedKeyDifferentialPathKt'
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
   commit: e66e511e950c726dcad25130332851cc569d52da
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
-execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.concrete.RelatedKeyDifferentialPathKt'
+execute: '{java} {build}/{exec} {main_class}'
 experiments:
   - name: "Midori-64_3_3"
     parameters: [model=GlobalXOR, version=Midori-64, r=3, sb=3, heuristic=Custom]
@@ -102,5 +103,5 @@ measures: ['p', '#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decis
 stats: [time]
 iterations: 1
 timeout:
-  duration: 48
+  duration: 24
   unit: HOURS

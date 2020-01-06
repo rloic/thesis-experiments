@@ -1,0 +1,96 @@
+---
+comments: |
+  Model: Midori Advanced Model (SAT) \\
+  Note version: \\
+    Add Midori 64 bits
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+path: '{FILE}/src'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: e820197d5cd8f54cf37066adea511723c6d7efa0
+compile: 'python3 {PROJECT}/picat/download.py'
+execute: '{PROJECT}/picat/Picat/picat {PROJECT}/picat/midori.pi'
+experiments:
+  - name: "Midori-64_3_3"
+    parameters: [64, 3, 3]
+  - name: "Midori-64_4_4"
+    parameters: [64, 4, 4]
+  - name: "Midori-64_5_5"
+    parameters: [64, 5, 5]
+  - name: "Midori-64_6_6"
+    parameters: [64, 6, 6]
+  - name: "Midori-64_7_7"
+    parameters: [64, 7, 7]
+  - name: "Midori-64_8_8"
+    parameters: [64, 8, 8]
+  - name: "Midori-64_9_9"
+    parameters: [64, 9, 9]
+  - name: "Midori-64_10_10"
+    parameters: [64, 10, 10]
+  - name: "Midori-64_11_11"
+    parameters: [64, 11, 11]
+  - name: "Midori-64_12_12"
+    parameters: [64, 12, 12]
+  - name: "Midori-64_13_13"
+    parameters: [64, 13, 13]
+  - name: "Midori-64_14_14"
+    parameters: [64, 14, 14]
+  - name: "Midori-64_15_15"
+    parameters: [64, 15, 15]
+  - name: "Midori-64_16_16"
+    parameters: [64, 16, 16]
+  - name: "Midori-64_17_17"
+    parameters: [64, 17, 17]
+  - name: "Midori-64_18_18"
+    parameters: [64, 18, 18]
+  - name: "Midori-64_19_19"
+    parameters: [64, 19, 19]
+  - name: "Midori-64_20_20"
+    parameters: [64, 20, 20]
+  - name: "Midori-128_3_3"
+    parameters: [128, 3, 3]
+  - name: "Midori-128_4_4"
+    parameters: [128, 4, 4]
+  - name: "Midori-128_5_5"
+    parameters: [128, 5, 5]
+  - name: "Midori-128_6_6"
+    parameters: [128, 6, 6]
+  - name: "Midori-128_7_7"
+    parameters: [128, 7, 7]
+  - name: "Midori-128_8_8"
+    parameters: [128, 8, 8]
+  - name: "Midori-128_9_9"
+    parameters: [128, 9, 9]
+  - name: "Midori-128_10_10"
+    parameters: [128, 10, 10]
+  - name: "Midori-128_11_11"
+    parameters: [128, 11, 11]
+  - name: "Midori-128_12_12"
+    parameters: [128, 12, 12]
+  - name: "Midori-128_13_13"
+    parameters: [128, 13, 13]
+  - name: "Midori-128_14_14"
+    parameters: [128, 14, 14]
+  - name: "Midori-128_15_15"
+    parameters: [128, 15, 15]
+  - name: "Midori-128_16_16"
+    parameters: [128, 16, 16]
+  - name: "Midori-128_17_17"
+    parameters: [128, 17, 17]
+  - name: "Midori-128_18_18"
+    parameters: [128, 18, 18]
+  - name: "Midori-128_19_19"
+    parameters: [128, 19, 19]
+  - name: "Midori-128_20_20"
+    parameters: [128, 20, 20]
+measures: ['#s'] # s = nb of solutions
+stats: [time]
+iterations: 1
+timeout:
+  duration: 24
+  unit: HOURS

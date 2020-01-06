@@ -19,9 +19,9 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: e66e511e950c726dcad25130332851cc569d52da
+  commit: c76598300b061db43d2c0093ada3908e250dbda4
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
-execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.truncated.RelatedKeyDifferentialPathKt'
+execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.concrete.RelatedKeyDifferentialPathKt'
 experiments:
   - name: "Midori-64_3_3"
     parameters: [model=Advanced, version=Midori-64, r=3, sb=3, heuristic=Dom_WDeg]
@@ -95,9 +95,9 @@ experiments:
     parameters: [model=Advanced, version=Midori-128, r=19, sb=19, heuristic=Dom_WDeg]
   - name: "Midori-128_20_20"
     parameters: [model=Advanced, version=Midori-128, r=20, sb=20, heuristic=Dom_WDeg]
-measures: ['#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
+measures: ['p', '#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
 stats: [time]
 iterations: 1
 timeout:
-  duration: 48
+  duration: 24
   unit: HOURS

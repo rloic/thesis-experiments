@@ -1,0 +1,30 @@
+---
+comments: |
+  Model: Midori Advanced Model (SAT) \\
+  Note version: \\
+    Add Midori 64 bits
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+  - name: python
+    version: 3.8
+path: '{FILE}/src'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: c76598300b061db43d2c0093ada3908e250dbda4
+compile: 'python3 {PROJECT}/picat/download.py'
+execute: 'python3 {PROJECT}/picat/midori_diff.py'
+experiments:
+  - name: "Midori-64"
+    parameters: [version=Midori-64]
+  - name: "Midori-128"
+    parameters: [version=Midori-128]
+measures: []
+stats: [time]
+iterations: 1
+timeout:
+  duration: 24
+  unit: HOURS
