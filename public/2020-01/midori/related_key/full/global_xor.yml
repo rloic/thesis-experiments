@@ -22,82 +22,82 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 31102c3869acde8ba4ddeeb117ca0838c79308d7
+  commit: e66e511e950c726dcad25130332851cc569d52da
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.concrete.RelatedKeyDifferentialPathKt'
 experiments:
   - name: "Midori-64_3_3"
-    parameters: [version=Midori-64, r=3, sb=3, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=3, sb=3, heuristic=Custom]
   - name: "Midori-64_4_4"
-    parameters: [version=Midori-64, r=4, sb=4, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=4, sb=4, heuristic=Custom]
   - name: "Midori-64_5_5"
-    parameters: [version=Midori-64, r=5, sb=5, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=5, sb=5, heuristic=Custom]
   - name: "Midori-64_6_6"
-    parameters: [version=Midori-64, r=6, sb=6, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=6, sb=6, heuristic=Custom]
   - name: "Midori-64_7_7"
-    parameters: [version=Midori-64, r=7, sb=7, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=7, sb=7, heuristic=Custom]
   - name: "Midori-64_8_8"
-    parameters: [version=Midori-64, r=8, sb=8, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=8, sb=8, heuristic=Custom]
   - name: "Midori-64_9_9"
-    parameters: [version=Midori-64, r=9, sb=9, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=9, sb=9, heuristic=Custom]
   - name: "Midori-64_10_10"
-    parameters: [version=Midori-64, r=10, sb=10, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=10, sb=10, heuristic=Custom]
   - name: "Midori-64_11_11"
-    parameters: [version=Midori-64, r=11, sb=11, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=11, sb=11, heuristic=Custom]
   - name: "Midori-64_12_12"
-    parameters: [version=Midori-64, r=12, sb=12, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=12, sb=12, heuristic=Custom]
   - name: "Midori-64_13_13"
-    parameters: [version=Midori-64, r=13, sb=13, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=13, sb=13, heuristic=Custom]
   - name: "Midori-64_14_14"
-    parameters: [version=Midori-64, r=14, sb=14, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=14, sb=14, heuristic=Custom]
   - name: "Midori-64_15_15"
-    parameters: [version=Midori-64, r=15, sb=15, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=15, sb=15, heuristic=Custom]
   - name: "Midori-64_16_16"
-    parameters: [version=Midori-64, r=16, sb=16, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=16, sb=16, heuristic=Custom]
   - name: "Midori-64_17_17"
-    parameters: [version=Midori-64, r=17, sb=17, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=17, sb=17, heuristic=Custom]
   - name: "Midori-64_18_18"
-    parameters: [version=Midori-64, r=18, sb=18, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=18, sb=18, heuristic=Custom]
   - name: "Midori-64_19_19"
-    parameters: [version=Midori-64, r=19, sb=19, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=19, sb=19, heuristic=Custom]
   - name: "Midori-64_20_20"
-    parameters: [version=Midori-64, r=20, sb=20, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-64, r=20, sb=20, heuristic=Custom]
   - name: "Midori-128_3_3"
-    parameters: [version=Midori-128, r=3, sb=3, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=3, sb=3, heuristic=Custom]
   - name: "Midori-128_4_4"
-    parameters: [version=Midori-128, r=4, sb=4, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=4, sb=4, heuristic=Custom]
   - name: "Midori-128_5_5"
-    parameters: [version=Midori-128, r=5, sb=5, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=5, sb=5, heuristic=Custom]
   - name: "Midori-128_6_6"
-    parameters: [version=Midori-128, r=6, sb=6, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=6, sb=6, heuristic=Custom]
   - name: "Midori-128_7_7"
-    parameters: [version=Midori-128, r=7, sb=7, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=7, sb=7, heuristic=Custom]
   - name: "Midori-128_8_8"
-    parameters: [version=Midori-128, r=8, sb=8, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=8, sb=8, heuristic=Custom]
   - name: "Midori-128_9_9"
-    parameters: [version=Midori-128, r=9, sb=9, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=9, sb=9, heuristic=Custom]
   - name: "Midori-128_10_10"
-    parameters: [version=Midori-128, r=10, sb=10, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=10, sb=10, heuristic=Custom]
   - name: "Midori-128_11_11"
-    parameters: [version=Midori-128, r=11, sb=11, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=11, sb=11, heuristic=Custom]
   - name: "Midori-128_12_12"
-    parameters: [version=Midori-128, r=12, sb=12, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=12, sb=12, heuristic=Custom]
   - name: "Midori-128_13_13"
-    parameters: [version=Midori-128, r=13, sb=13, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=13, sb=13, heuristic=Custom]
   - name: "Midori-128_14_14"
-    parameters: [version=Midori-128, r=14, sb=14, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=14, sb=14, heuristic=Custom]
   - name: "Midori-128_15_15"
-    parameters: [version=Midori-128, r=15, sb=15, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=15, sb=15, heuristic=Custom]
   - name: "Midori-128_16_16"
-    parameters: [version=Midori-128, r=16, sb=16, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=16, sb=16, heuristic=Custom]
   - name: "Midori-128_17_17"
-    parameters: [version=Midori-128, r=17, sb=17, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=17, sb=17, heuristic=Custom]
   - name: "Midori-128_18_18"
-    parameters: [version=Midori-128, r=18, sb=18, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=18, sb=18, heuristic=Custom]
   - name: "Midori-128_19_19"
-    parameters: [version=Midori-128, r=19, sb=19, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=19, sb=19, heuristic=Custom]
   - name: "Midori-128_20_20"
-    parameters: [version=Midori-128, r=20, sb=20, heuristic=Custom]
+    parameters: [model=GlobalXOR, version=Midori-128, r=20, sb=20, heuristic=Custom]
 measures: ['p', '#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
 stats: [time]
 iterations: 1
