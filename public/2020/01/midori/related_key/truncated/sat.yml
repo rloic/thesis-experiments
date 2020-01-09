@@ -9,88 +9,83 @@ requirements:
   - name: java
     version: 1.8
 path: '{FILE}/src'
+shortcuts:
+  MINIZINC_PATH: '{PROJECT}/sat/MiniZincIDE-2.2.3-bundle-linux'
+  PICAT_PATH: '{PROJECT}/sat/Picat'
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: e820197d5cd8f54cf37066adea511723c6d7efa0
-compile: 'python3 {PROJECT}/picat/download.py'
-execute: '{PROJECT}/picat/Picat/picat {PROJECT}/picat/midori.pi'
+  commit: f290f76a487069ef43224cb0d134b4ec6f7ca69b
+compile: 'python3 {PROJECT}/sat/download.py'
+execute: 'python3 {PROJECT}/sat/related_key.py'
 experiments:
-  - name: "Midori-64_3_3"
-    parameters: [64, 3, 3]
-  - name: "Midori-64_4_4"
-    parameters: [64, 4, 4]
-  - name: "Midori-64_5_5"
-    parameters: [64, 5, 5]
-  - name: "Midori-64_6_6"
-    parameters: [64, 6, 6]
-  - name: "Midori-64_7_7"
-    parameters: [64, 7, 7]
-  - name: "Midori-64_8_8"
-    parameters: [64, 8, 8]
-  - name: "Midori-64_9_9"
-    parameters: [64, 9, 9]
-  - name: "Midori-64_10_10"
-    parameters: [64, 10, 10]
-  - name: "Midori-64_11_11"
-    parameters: [64, 11, 11]
-  - name: "Midori-64_12_12"
-    parameters: [64, 12, 12]
-  - name: "Midori-64_13_13"
-    parameters: [64, 13, 13]
-  - name: "Midori-64_14_14"
-    parameters: [64, 14, 14]
-  - name: "Midori-64_15_15"
-    parameters: [64, 15, 15]
-  - name: "Midori-64_16_16"
-    parameters: [64, 16, 16]
-  - name: "Midori-64_17_17"
-    parameters: [64, 17, 17]
-  - name: "Midori-64_18_18"
-    parameters: [64, 18, 18]
-  - name: "Midori-64_19_19"
-    parameters: [64, 19, 19]
-  - name: "Midori-64_20_20"
-    parameters: [64, 20, 20]
+  - name: "Midori-64_3_1"
+    parameters: [version=64, r=3, sb=1, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-64_4_2"
+    parameters: [version=64, r=4, sb=2, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-64_5_2"
+    parameters: [version=64, r=5, sb=2, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-64_6_3"
+    parameters: [version=64, r=6, sb=3, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-64_7_3"
+    parameters: [version=64, r=7, sb=3, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-64_8_4"
+    parameters: [version=64, r=8, sb=4, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-64_9_4"
+    parameters: [version=64, r=9, sb=4, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-64_10_5"
+    parameters: [version=64, r=10, sb=5, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-64_11_5"
+    parameters: [version=64, r=11, sb=5, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-64_12_6"
+    parameters: [version=64, r=12, sb=6, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-64_13_6"
+    parameters: [version=64, r=13, sb=6, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-64_14_7"
+    parameters: [version=64, r=14, sb=7, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-64_15_7"
+    parameters: [version=64, r=15, sb=7, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: "Midori-64_16_8"
+    parameters: [version=64, r=16, sb=8, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_3_3"
-    parameters: [128, 3, 3]
+    parameters: [version=128, r=3, sb=3, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_4_4"
-    parameters: [128, 4, 4]
+    parameters: [version=128, r=4, sb=4, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_5_5"
-    parameters: [128, 5, 5]
+    parameters: [version=128, r=5, sb=5, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_6_6"
-    parameters: [128, 6, 6]
+    parameters: [version=128, r=6, sb=6, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_7_7"
-    parameters: [128, 7, 7]
+    parameters: [version=128, r=7, sb=7, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_8_8"
-    parameters: [128, 8, 8]
+    parameters: [version=128, r=8, sb=8, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_9_9"
-    parameters: [128, 9, 9]
+    parameters: [version=128, r=9, sb=9, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_10_10"
-    parameters: [128, 10, 10]
+    parameters: [version=128, r=10, sb=10, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_11_11"
-    parameters: [128, 11, 11]
+    parameters: [version=128, r=11, sb=11, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_12_12"
-    parameters: [128, 12, 12]
+    parameters: [version=128, r=12, sb=12, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_13_13"
-    parameters: [128, 13, 13]
+    parameters: [version=128, r=13, sb=13, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_14_14"
-    parameters: [128, 14, 14]
+    parameters: [version=128, r=14, sb=14, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_15_15"
-    parameters: [128, 15, 15]
+    parameters: [version=128, r=15, sb=15, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_16_16"
-    parameters: [128, 16, 16]
+    parameters: [version=128, r=16, sb=16, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_17_17"
-    parameters: [128, 17, 17]
+    parameters: [version=128, r=17, sb=17, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_18_18"
-    parameters: [128, 18, 18]
+    parameters: [version=128, r=18, sb=18, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_19_19"
-    parameters: [128, 19, 19]
+    parameters: [version=128, r=19, sb=19, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
   - name: "Midori-128_20_20"
-    parameters: [128, 20, 20]
+    parameters: [version=128, r=20, sb=20, 'MINZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
 measures: ['#s'] # s = nb of solutions
 stats: [time]
 iterations: 1
 timeout:
-  duration: 24
+  duration: 12
   unit: HOURS

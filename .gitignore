@@ -6,6 +6,7 @@ account.yml
 
 # Ignore results and sources
 **/results
+**/logs
 **/src
 
 # Compiled class file
