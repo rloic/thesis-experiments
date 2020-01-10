@@ -19,7 +19,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: c76598300b061db43d2c0093ada3908e250dbda4
+  commit: 268e72ee0d98aea7f271da7b051af286d94fcef2
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.concrete.DifferentialKt'
 experiments:
@@ -31,5 +31,5 @@ measures: []
 stats: [time]
 iterations: 1
 timeout:
-  duration: 24
+  duration: 12
   unit: HOURS
