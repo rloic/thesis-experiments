@@ -19,7 +19,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 268e72ee0d98aea7f271da7b051af286d94fcef2
+  commit: 851a776fcf552bf3d4a3a6b1cf4568d24d56be68
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.truncated.RelatedKeyDifferentialPathKt'
 experiments:
