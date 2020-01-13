@@ -3,6 +3,7 @@ comments: |
   Model: Midori Basic Model \\
   Note version: \\
     Add Midori 64 bits
+    Add MDS constraint
 requirements:
   - name: gradle
     version: 4.9
@@ -19,7 +20,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 851a776fcf552bf3d4a3a6b1cf4568d24d56be68
+  commit: adabf45ac64b5aa902067a8a2862168dd3b2dc13
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.truncated.RelatedKeyDifferentialPathKt'
 experiments:
@@ -91,5 +92,5 @@ measures: ['#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision p
 stats: [time]
 iterations: 1
 timeout:
-  duration: 12
+  duration: 1
   unit: HOURS
