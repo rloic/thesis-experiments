@@ -22,7 +22,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 268e72ee0d98aea7f271da7b051af286d94fcef2
+  commit: c050bd4055502b42afdbec15c92622de133692a2
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.truncated.DifferentialKt'
 experiments:
