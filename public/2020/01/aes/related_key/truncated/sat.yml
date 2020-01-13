@@ -1,0 +1,88 @@
+---
+comments: |
+  Model: Midori Advanced Model (SAT) \\
+  Note version: \\
+    Add Midori 64 bits
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  MINIZINC_PATH: '{PROJECT}/sat/MiniZincIDE-2.2.3-bundle-linux'
+  PICAT_PATH: '{PROJECT}/sat/Picat'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: 127d4dac2ef5c8609dc9f5bf9ab6d99d85fc9617
+compile: 'python3 {PROJECT}/sat/download.py'
+execute: 'python3 {PROJECT}/sat/aes/related_key.py'
+experiments:
+# AES 128
+  - name: AES128-3-5
+    parameters: [version=128, r=3, sb=5, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: AES128-4-12
+    parameters: [version=128, r=4, sb=12, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+    level: 1
+  - name: AES128-5-17
+    parameters: [version=128, r=5, sb=17, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+    level: 2
+# AES 192
+  - name: AES192-3-1
+    parameters: [version=192, r=3, sb=1, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: AES192-4-4
+    parameters: [version=192, r=4, sb=4, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: AES192-5-5
+    parameters: [version=192, r=5, sb=5, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: AES192-6-10
+    parameters: [version=192, r=6, sb=10, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: AES192-7-13
+    parameters: [version=192, r=7, sb=13, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+    level: 1
+  - name: AES192-8-18
+    parameters: [version=192, r=8, sb=18, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+    level: 1
+  - name: AES192-9-24
+    parameters: [version=192, r=9, sb=24, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+    level: 2
+  - name: AES192-10-27
+    parameters: [version=192, r=9, sb=24, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+    level: 2
+# AES 256
+  - name: AES256-3-1
+    parameters: [version=256, r=3, sb=1, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: AES256-4-3
+    parameters: [version=256, r=4, sb=3, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: AES256-5-3
+    parameters: [version=256, r=5, sb=3, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: AES256-6-5
+    parameters: [version=256, r=6, sb=5, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: AES256-7-5
+    parameters: [version=256, r=7, sb=5, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: AES256-8-10
+    parameters: [version=256, r=8, sb=10, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+  - name: AES256-9-15
+    parameters: [version=256, r=9, sb=15, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+    level: 1
+  - name: AES256-10-16
+    parameters: [version=256, r=10, sb=16, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+    level: 1
+  - name: AES256-11-20
+    parameters: [version=256, r=11, sb=20, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+    level: 2
+  - name: AES256-12-20
+    parameters: [version=256, r=12, sb=20, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+    level: 2
+  - name: AES256-13-24
+    parameters: [version=256, r=13, sb=24, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+    level: 2
+  - name: AES256-14-24
+    parameters: [version=256, r=14, sb=24, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+    level: 2
+measures: ['#s'] # s = nb of solutions
+stats: [time]
+iterations: 1
+timeout:
+  duration: 1
+  unit: HOURS
