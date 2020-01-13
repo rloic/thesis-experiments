@@ -91,5 +91,5 @@ measures: ['p', '#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decis
 stats: [time]
 iterations: 1
 timeout:
-  duration: 12
+  duration: 1
   unit: HOURS

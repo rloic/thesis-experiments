@@ -19,7 +19,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 268e72ee0d98aea7f271da7b051af286d94fcef2
+  commit: adabf45ac64b5aa902067a8a2862168dd3b2dc13
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.concrete.RelatedKeyDifferentialPathKt'
 experiments:
@@ -91,5 +91,5 @@ measures: ['p', '#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decis
 stats: [time]
 iterations: 1
 timeout:
-  duration: 12
+  duration: 1
   unit: HOURS

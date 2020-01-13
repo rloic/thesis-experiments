@@ -98,5 +98,5 @@ measures: [p] # p = best probability
 stats: [time]
 iterations: 1
 timeout:
-  duration: 12
+  duration: 1
   unit: HOURS
