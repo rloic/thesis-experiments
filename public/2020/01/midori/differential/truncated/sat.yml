@@ -2,7 +2,8 @@
 comments: |
   Model: Midori Advanced Model (SAT) \\
   Note version: \\
-    Add Midori 64 bits
+    Add Midori 64 bits \\
+    Do not display solutions
 requirements:
   - name: gradle
     version: 4.9
@@ -17,7 +18,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 268e72ee0d98aea7f271da7b051af286d94fcef2
+  commit: 3fbbbee89726b37b28ac4b18a3886ea970c60f27
 compile: 'python3 {PROJECT}/sat/download.py'
 execute: 'python3 {PROJECT}/sat/differential.py'
 experiments:
