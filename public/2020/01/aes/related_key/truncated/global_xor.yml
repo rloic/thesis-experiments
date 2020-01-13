@@ -1,0 +1,118 @@
+---
+comments: |
+  Model: AES Global using \textit{abstractXOR} constraint \\
+  NbActives ordering: Middle \\
+  Heuristic: Dom/WDeg + Adaptation of Dom/WDeg for $\Delta$SBoxes and xor vars. \\
+    Dom/Wdeg is used for nbActives and realisation vars split (see below). The Adaptation of Dom/WDeg is used for the
+    $\Delta$SBoxes split, the abstractVars split and the abstract xor vars split.
+    The WDeg implementation is an adaptation of Dom/WDeg that fit to the abstractXOR constraint. In this way, the global
+    constraint is considered by the strategy as a set of xor equations instead of a global one. This improves the weights
+  Heuristic split:
+  \begin{itemize}
+    \item nbActives: The number of active sBoxes for each round $i$
+    \item $\Delta$SBoxes: The abstraction of the sBoxes
+    \item probabilities: The probabilities linked to the SBoxes
+    \item $\delta$SBoxes: The concrete value (byte level) of the sBoxes
+    \item variables that require instantiation: $\delta$PlainText, $\delta$CipherText, $\delta$X, $\delta$SX, $\delta$Y, $\delta$Z and $\delta$WK.
+  \end{itemize}
+  Remark: \\
+    Advanced mds is enable for AES-3-5 to avoid massive exploration of the concrete part of the search tree. The reverse mix column
+    operation is used as the mds property. For advanced MDS, we limit the number of interation by setting LIMIT_ADVANCED_MDS_GENERATION=3.
+    This parameter indicates that advanced mds is enabled for the first four rounds. The advanced MDS property seems to be usefull when the
+    number of active sboxes is not bounded by nbActives[i].
+  Version note: \\
+    Improve heuristic (better performance in both times and nodes)
+    !! IMPORTANT !! The actives sboxes that belong to $WK_{Nr}$ are not counted anymore. This is due to the fact that CipherText
+    can be modified to minimise all the sBoxes present in the last $WK$ [1]. \\
+    We add the reverse MixColumn operation. This option is enabled when Y2_Y3 option is set to true
+  [1] Gerault, David, Pascal Lafo{FILE}/srcurcade, Marine Minier, et Christine Solnon. \\
+  « Computing AES Related-Key Differential Characteristics with Constraint Programming ». \\
+  Artificial Intelligence 278 (janvier 2020): 103183. https://doi.org/10.1016/j.artint.2019.103183.
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  gradle_conf: 'build_exp.gradle'
+  gradle_task: 'jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -cp'
+  main_class: 'com.github.rloic.kt.aes.app.truncated.RelatedKeyDifferentialPathKt'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: 0d45e1c51314aab160acb2f0e77dea0666f1b4f4
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec} {main_class}'
+experiments:
+# AES 128
+  - name: AES128-3-5
+    parameters: [model=GlobalXOR, version=AES-128, r=3, sb=5, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=3]
+  - name: AES128-4-12
+    parameters: [model=GlobalXOR, version=AES-128, r=4, sb=12, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=3]
+    level: 1
+  - name: AES128-5-17
+    parameters: [model=GlobalXOR, version=AES-128, r=5, sb=17, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=1, LIMIT_ADVANCED_MDS_GENERATION=3]
+    level: 2
+# AES 192
+  - name: AES192-3-1
+    parameters: [model=GlobalXOR, version=AES-192, r=3, sb=1, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+  - name: AES192-4-4
+    parameters: [model=GlobalXOR, version=AES-192, r=4, sb=4, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+  - name: AES192-5-5
+    parameters: [model=GlobalXOR, version=AES-192, r=5, sb=5, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+  - name: AES192-6-10
+    parameters: [model=GlobalXOR, version=AES-192, r=6, sb=10, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+  - name: AES192-7-13
+    parameters: [model=GlobalXOR, version=AES-192, r=7, sb=13, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+    level: 1
+  - name: AES192-8-18
+    parameters: [model=GlobalXOR, version=AES-192, r=8, sb=18, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+    level: 1
+  - name: AES192-9-24
+    parameters: [model=GlobalXOR, version=AES-192, r=9, sb=24, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+    level: 2
+  - name: AES192-10-27
+    parameters: [model=GlobalXOR, version=AES-192, r=9, sb=24, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+    level: 2
+# AES 256
+  - name: AES256-3-1
+    parameters: [model=GlobalXOR, version=AES-256, r=3, sb=1, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+  - name: AES256-4-3
+    parameters: [model=GlobalXOR, version=AES-256, r=4, sb=3, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+  - name: AES256-5-3
+    parameters: [model=GlobalXOR, version=AES-256, r=5, sb=3, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+  - name: AES256-6-5
+    parameters: [model=GlobalXOR, version=AES-256, r=6, sb=5, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+  - name: AES256-7-5
+    parameters: [model=GlobalXOR, version=AES-256, r=7, sb=5, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+  - name: AES256-8-10
+    parameters: [model=GlobalXOR, version=AES-256, r=8, sb=10, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+  - name: AES256-9-15
+    parameters: [model=GlobalXOR, version=AES-256, r=9, sb=15, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+    level: 1
+  - name: AES256-10-16
+    parameters: [model=GlobalXOR, version=AES-256, r=10, sb=16, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+    level: 1
+  - name: AES256-11-20
+    parameters: [model=GlobalXOR, version=AES-256, r=11, sb=20, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+    level: 2
+  - name: AES256-12-20
+    parameters: [model=GlobalXOR, version=AES-256, r=12, sb=20, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+    level: 2
+  - name: AES256-13-24
+    parameters: [model=GlobalXOR, version=AES-256, r=13, sb=24, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+    level: 2
+  - name: AES256-14-24
+    parameters: [model=GlobalXOR, version=AES-256, r=14, sb=24, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+    level: 2
+measures: ['#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 48
+  unit: HOURS
