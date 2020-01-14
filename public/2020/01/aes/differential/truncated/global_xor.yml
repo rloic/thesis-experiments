@@ -45,19 +45,19 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 0d45e1c51314aab160acb2f0e77dea0666f1b4f4
+  commit: b2fefe9f58c105c478c06908e008990fc121d356
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} {main_class}'
 experiments:
 # AES 128
   - name: AES128
-    parameters: [model=GlobalXOR, version=AES-128, r=5, sb=21, INCREMENTAL=1, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0, LIMIT_ADVANCED_MDS_GENERATION=0]
+    parameters: [model=GlobalXOR, version=AES-128, r=5, sb=21, INCREMENTAL=1, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=1]
 # AES 192
   - name: AES192
-    parameters: [model=GlobalXOR, version=AES-192, r=10, sb=32, INCREMENTAL=1, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+    parameters: [model=GlobalXOR, version=AES-192, r=10, sb=32, INCREMENTAL=1, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=1]
 # AES 256
   - name: AES256
-    parameters: [model=GlobalXOR, version=AES-256, r=14, sb=42, INCREMENTAL=1, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=0]
+    parameters: [model=GlobalXOR, version=AES-256, r=14, sb=42, INCREMENTAL=1, heuristic=Custom, order=Middle, ENABLE_MDS=0, ENABLE_Y2_Y3=1, ENABLE_ADVANCED_MDS=1]
 measures: ['#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
 stats: [time]
 iterations: 1
