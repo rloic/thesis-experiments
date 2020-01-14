@@ -15,7 +15,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 127d4dac2ef5c8609dc9f5bf9ab6d99d85fc9617
+  commit: 36737b8d87b71796336ac873b23d31d26b1fd7f4
 compile: 'python3 {PROJECT}/sat/download.py'
 execute: 'python3 {PROJECT}/sat/aes/related_key.py'
 experiments:
