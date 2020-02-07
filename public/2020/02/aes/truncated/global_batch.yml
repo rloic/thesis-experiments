@@ -1,6 +1,6 @@
 ---
 comments: |
-  AbstractXOR Mode Batch. Heuristique d'affectation = findFirst
+  AbstractXOR Mode Batch. Heuristique d'affectation = oneThenMin
   Pas d'utilisation des clusteurs de variables
 requirements:
   - name: gradle
@@ -19,7 +19,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 40a1c7f58a1c9ad937898e08ef0033ff2966d83b
+  commit: 3a00684a69eae06c7309b99ec42b1ef6c3ee5e2f
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} {main_class}'
 experiments:
