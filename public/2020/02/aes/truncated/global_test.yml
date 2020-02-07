@@ -1,6 +1,6 @@
 ---
 comments: |
-  AbstractXOR Mode Batch. Heuristique d'affectation = oneThenMin
+  AbstractXOR Mode Incremental. Heuristique d'affectation = findFirst
   Pas d'utilisation des clusteurs de variables
 requirements:
   - name: gradle
@@ -15,7 +15,7 @@ shortcuts:
   build: '{PROJECT}/build/libs'
   jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
   java: 'java {jvm_args} -cp'
-  main_class: 'com.github.rloic.aes.benchmarks.AESGlobalBatch'
+  main_class: 'com.github.rloic.aes.benchmarks.AESGlobalTest'
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
