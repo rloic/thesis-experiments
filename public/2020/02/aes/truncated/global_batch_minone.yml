@@ -1,0 +1,59 @@
+---
+comments: |
+  AbstractXOR Mode Batch. Heuristique d'affectation = oneThenMin
+  Pas d'utilisation des clusteurs de variables
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  gradle_conf: 'build_exp.gradle'
+  gradle_task: 'jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -cp'
+  main_class: 'com.github.rloic.aes.benchmarks.AESGlobalBatch'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: 0f62f3a7b61e430f3794b8163c7f26e0aa718b63
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec} {main_class}'
+experiments:
+# AES 128
+  - name: AES128-3-5
+    parameters: [version=AES-128, r=3, sb=5]
+  - name: AES128-4-12
+    parameters: [version=AES-128, r=4, sb=12]
+    level: 1
+# AES 192
+  - name: AES192-3-1
+    parameters: [version=AES-192, r=3, sb=1]
+  - name: AES192-4-4
+    parameters: [version=AES-192, r=4, sb=4]
+  - name: AES192-5-5
+    parameters: [version=AES-192, r=5, sb=5]
+  - name: AES192-6-10
+    parameters: [version=AES-192, r=6, sb=10]
+# AES 256
+  - name: AES256-3-1
+    parameters: [version=AES-256, r=3, sb=1]
+  - name: AES256-4-3
+    parameters: [version=AES-256, r=4, sb=3]
+  - name: AES256-5-3
+    parameters: [version=AES-256, r=5, sb=3]
+  - name: AES256-6-5
+    parameters: [version=AES-256, r=6, sb=5]
+  - name: AES256-7-5
+    parameters: [version=AES-256, r=7, sb=5]
+  - name: AES256-8-10
+    parameters: [version=AES-256, r=8, sb=10]
+measures: ['#s', '#dc'] # s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 1
+  unit: HOURS
