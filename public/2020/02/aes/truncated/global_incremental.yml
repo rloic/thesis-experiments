@@ -2,6 +2,7 @@
 comments: |
   AbstractXOR Mode Incremental. Heuristique d'affectation = findFirst
   Pas d'utilisation des clusteurs de variables
+  Heuristique dynamique
 requirements:
   - name: gradle
     version: 4.9
@@ -19,7 +20,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 40a1c7f58a1c9ad937898e08ef0033ff2966d83b
+  commit: 243b2bce7436ab3f071efbcf78f51bf3382aeeb4
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} {main_class}'
 experiments:
@@ -38,6 +39,7 @@ experiments:
     parameters: [version=AES-192, r=5, sb=5]
   - name: AES192-6-10
     parameters: [version=AES-192, r=6, sb=10]
+    level: 1
 # AES 256
   - name: AES256-3-1
     parameters: [version=AES-256, r=3, sb=1]
@@ -51,6 +53,7 @@ experiments:
     parameters: [version=AES-256, r=7, sb=5]
   - name: AES256-8-10
     parameters: [version=AES-256, r=8, sb=10]
+    level: 1
 measures: ['#s', '#dc'] # s = nb solutions, #dc = nb decision points
 stats: [time]
 iterations: 1

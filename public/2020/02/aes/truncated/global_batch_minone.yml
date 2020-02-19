@@ -2,6 +2,7 @@
 comments: |
   AbstractXOR Mode Batch. Heuristique d'affectation = oneThenMin
   Pas d'utilisation des clusteurs de variables
+  Heuristique Dynamique
 requirements:
   - name: gradle
     version: 4.9
@@ -19,7 +20,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: af0245bcdb090e8e4052621d59b07510b7cd7ab7
+  commit: bd8ceea04020a4592834663d1f37d1991e9a010b
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} {main_class}'
 experiments:
