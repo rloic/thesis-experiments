@@ -29,7 +29,7 @@ experiments:
     parameters: [version=AES-128, r=3, sb=5]
   - name: AES128-4-12
     parameters: [version=AES-128, r=4, sb=12]
-    level: 1
+    level: 2
 # AES 192
   - name: AES192-3-1
     parameters: [version=AES-192, r=3, sb=1]
