@@ -1,36 +1,76 @@
-# Thesis experiments
+# Loïc Rouquette PhD experiments
 
-## Archives
+## Requirements
+- gradle >= 4.9
+- java >= 1.8
 
-### Fichiers
-- midori[commit=d2e74dcd603213e11d0f1b79dcab6b9d6428474b]
-- aes[commit=a32f5dbbe36ceaa5a732be2247df378c59551916]
+## How to run
+**The replikate script is now located at: [https://www.github.com/rloic/replikate]()**
+The execution is simple, open a terminal at the root of the repository and run:
+```bash
+./replikate.py path_to_config.yml -g -b -r
+```
 
-#### Midori
-##### midori[commit=d2e74dcd603213e11d0f1b79dcab6b9d6428474b]
+The option `-g` will fetch the source code from the repository
+The option `-b` will build the jar file
+The option `-r` will run the experiment
 
-*Objectifs* : Tester l'efficacité de différents paramètres de restarts.
+!! Running the experiment will lock the folder to prevent results erasure. To clean the old result, use the `--clean` option before rerun the option `r`.
 
-*Notes* : Les paramètres qui donnent les meilleurs résultats sont 4, 8 et 32 selon les instances.
+Usage example:
+```bash
+./replikate.py public/summary_nov_19.yml -g -b -r
+```
 
-L'heuristique utilisé est :
+If you do not specify command, like: `./replikate.py public/summary_nov_19.yml`, the script will display the description of the configuration file and the command line help.
+Example: 
+```markdown
+Project requirements: 
+ - gradle >= 4.9
+ - java >= 1.8
 
-- DomOverDWeg*(nbActives),
-- WDeg($\Delta$SBoxes) avec les contraintes fantômes,
-- WDeg(abstractVars) avec les contraintes fantômes,
-- DomOverDWeg*(all)
+Commands: 
+ -g or --git:	 Retrieves the sources from the remote repository (if exists)
+ -b or --build:	 Compile the project
+ -r or --run:	 Run the experiments. The summary file will be located in public/summary_nov_19/aes_advanced_gerault/src/results
+ --clean:	 Clean the results folder
+ --mail: Configure the automatic email sending. ex --email:to=me@my-mail.com --email:frequency=each
+    to: add an email to the recipients
+    frequency: send an email foreach experiment (each) or when the full summary is complete (end).
+    on_failure: indicates whenever an email must be send when an experiment fails, valid options are [never, first, always]
+    on_timeout: indicates whenever an email must be send when an experiment produces a timeout, valid options are [never, first, always]
 
-*DomOverDWeg est une version légèrement modifié qui ne prend pas les heuristiques maximales mais les trois meilleurs scores. Cela permet d'ajouter d'explorer des arbres différents lors des restarts.
+Notes: 
+## AES Step 1
 
-#### AES
-##### aes[commit=a32f5dbbe36ceaa5a732be2247df378c59551916]
+Model: AES Advanced [1]
+Heuristic : Dom/WDeg (standard version)
 
-*Objectifs* : Test sur AES de l'ajout des sommes cumulées pour nbActives
+Heuristic splits : [$\Delta$SBoxes, abstractVars*]
+*abstractVars = [$\Delta X$, $\Delta K$, $\Delta Z$] and $\Delta Y$ are a combination of $\Delta$SBoxes.
 
-L'heuristique utilisée est :
-- Search.minDomLB(nbActives),
-- DomOverDWeg*($\Delta$SBoxes),
-- DomOverDWeg*(abstractVars),
-- DomOverDWeg*(other)
+[1] David Gérault, Pascal Lafourcade, Marine Minier, Christine Solnon. Revisiting AES Related-Key
+    Differential Attacks with Constraint Programming. Information Processing Letters, Elsevier, 2018,
+    139, pp.24-29
+```
 
-*DomOverDWeg est une version modifié. Lorsque la contrainte qui engendre le conflit est *abstractXOR*, on renforce l'ensemble des autres contraintes qui sont associées à la variable responsable de la contradiction.
+### Running a specific configuration
+
+To run a specific configuration (given with a commit hash)
+
+```bash
+./replikate.py url=[https://raw.githubusercontent.com/rloic/thesis-experiments/'HASH'/]'FILE_PATH' -g -b -r # Without the '
+```
+
+The `[]` is use to separate the host from the path. The file will be downloaded under `./FILE_PATH`.
+
+Example:
+
+```bash
+./replikate.py url=[https://raw.githubusercontent.com/rloic/thesis-experiments/f1e21d7cf0940d3a239bb3310035336fe1324d09]public/summary_nov_19/aes_global_y2_y3_mds.yml -g -b -r
+```
+
+## Folders
+
+When an experiment is performed, a new folder is created with the name of the experiment file. Ex: `my_conf.yml` will create a new folder `my_conf` at the same path.
+The source files will be downloaded under `my_conf/src` and the results files will be printed under `my_conf/results`. A summary csv will be available at the root of the results folder, and for each experiment a new folder will be printed with the log of the run. The _lock files are only used to prevent the re-execution of the same experiment when the script is launched multiple times.

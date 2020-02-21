@@ -1,11 +1,18 @@
 # Ignore idea folder
 .idea
 
+# Ignore gradle
+.gradle
+
+# Ignore tsv
+*.tsv
+
 # Ignore account configuration file
 account.yml
 
 # Ignore results and sources
 **/results
+**/logs
 **/src
 
 # Compiled class file

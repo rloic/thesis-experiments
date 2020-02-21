@@ -1,0 +1,91 @@
+---
+comments: |
+  TODO
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  gradle_conf: 'build_exp.gradle'
+  gradle_task: 'jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -cp'
+  main_class: 'App'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: fa5f4fc1fb094adb20ffec2d305e88ede2038a33
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec} {main_class}'
+experiments:
+# AES 128
+  - name: AES128-3-5
+    parameters: [MOD=GLOBAL, version=AES-128, r=3, sb=5, heuristic=inputOrder]
+  - name: AES128-4-12
+    parameters: [MOD=GLOBAL, version=AES-128, r=4, sb=12, heuristic=inputOrder]
+    level: 1
+  - name: AES128-5-17
+    parameters: [MOD=GLOBAL, version=AES-128, r=5, sb=17, heuristic=inputOrder]
+    level: 2
+# AES 192
+  - name: AES192-3-1
+    parameters: [MOD=GLOBAL, version=AES-192, r=3, sb=1, heuristic=inputOrder]
+  - name: AES192-4-4
+    parameters: [MOD=GLOBAL, version=AES-192, r=4, sb=4, heuristic=inputOrder]
+  - name: AES192-5-5
+    parameters: [MOD=GLOBAL, version=AES-192, r=5, sb=5, heuristic=inputOrder]
+  - name: AES192-6-10
+    parameters: [MOD=GLOBAL, version=AES-192, r=6, sb=10, heuristic=inputOrder]
+  - name: AES192-7-13
+    parameters: [MOD=GLOBAL, version=AES-192, r=7, sb=13, heuristic=inputOrder]
+    level: 1
+  - name: AES192-8-18
+    parameters: [MOD=GLOBAL, version=AES-192, r=8, sb=18, heuristic=inputOrder]
+    level: 1
+  - name: AES192-9-24
+    parameters: [MOD=GLOBAL, version=AES-192, r=9, sb=24, heuristic=inputOrder]
+    level: 2
+  - name: AES192-10-27
+    parameters: [MOD=GLOBAL, version=AES-192, r=9, sb=24, heuristic=inputOrder]
+    level: 2
+# AES 256
+  - name: AES256-3-1
+    parameters: [MOD=GLOBAL, version=AES-256, r=3, sb=1, heuristic=inputOrder]
+  - name: AES256-4-3
+    parameters: [MOD=GLOBAL, version=AES-256, r=4, sb=3, heuristic=inputOrder]
+  - name: AES256-5-3
+    parameters: [MOD=GLOBAL, version=AES-256, r=5, sb=3, heuristic=inputOrder]
+  - name: AES256-6-5
+    parameters: [MOD=GLOBAL, version=AES-256, r=6, sb=5, heuristic=inputOrder]
+  - name: AES256-7-5
+    parameters: [MOD=GLOBAL, version=AES-256, r=7, sb=5, heuristic=inputOrder]
+  - name: AES256-8-10
+    parameters: [MOD=GLOBAL, version=AES-256, r=8, sb=10, heuristic=inputOrder]
+  - name: AES256-9-15
+    parameters: [MOD=GLOBAL, version=AES-256, r=9, sb=15, heuristic=inputOrder]
+    level: 1
+  - name: AES256-10-16
+    parameters: [MOD=GLOBAL, version=AES-256, r=10, sb=16, heuristic=inputOrder]
+    level: 1
+  - name: AES256-11-20
+    parameters: [MOD=GLOBAL, version=AES-256, r=11, sb=20, heuristic=inputOrder]
+    level: 2
+  - name: AES256-12-20
+    parameters: [MOD=GLOBAL, version=AES-256, r=12, sb=20, heuristic=inputOrder]
+    level: 2
+  - name: AES256-13-24
+    parameters: [MOD=GLOBAL, version=AES-256, r=13, sb=24, heuristic=inputOrder]
+    level: 2
+  - name: AES256-14-24
+    parameters: [MOD=GLOBAL, version=AES-256, r=14, sb=24, heuristic=inputOrder]
+    level: 2
+measures: ['#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 1
+  unit: HOURS

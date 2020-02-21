@@ -1,0 +1,36 @@
+---
+comments: |
+  Model: Midori Advanced Model (SAT) \\
+  Note version: \\
+    Add Midori 64 bits
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  MINIZINC_PATH: '{PROJECT}/sat/MiniZincIDE-2.2.3-bundle-linux'
+  PICAT_PATH: '{PROJECT}/sat/Picat'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: 127d4dac2ef5c8609dc9f5bf9ab6d99d85fc9617
+compile: 'python3 {PROJECT}/sat/download.py'
+execute: 'python3 {PROJECT}/sat/aes/differential.py'
+experiments:
+# AES 128
+  - name: AES128
+    parameters: [version=128, r=5, sb=22, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+# AES 192
+  - name: AES192
+    parameters: [version=192, r=10, sb=32, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+# AES 256
+  - name: AES256
+    parameters: [version=256, r=14, sb=42, 'MINIZINC_PATH={MINIZINC_PATH}', 'PICAT_PATH={PICAT_PATH}']
+measures: ['#s'] # s = nb of solutions
+stats: [time]
+iterations: 1
+timeout:
+  duration: 1
+  unit: HOURS

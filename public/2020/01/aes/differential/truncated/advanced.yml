@@ -1,0 +1,65 @@
+---
+comments: |
+  Model: AES Global using \textit{abstractXOR} constraint \\
+  NbActives ordering: Alternate \\
+  Heuristic: Dom/WDeg + Adaptation of Dom/WDeg for $\Delta$SBoxes and xor vars. \\
+    Dom/Wdeg is used for nbActives and realisation vars split (see below). The Adaptation of Dom/WDeg is used for the
+    $\Delta$SBoxes split, the abstractVars split and the abstract xor vars split.
+    The WDeg implementation is an adaptation of Dom/WDeg that fit to the abstractXOR constraint. In this way, the global
+    constraint is considered by the strategy as a set of xor equations instead of a global one. This improves the weights
+  Heuristic split:
+  \begin{itemize}
+    \item nbActives: The number of active sBoxes for each round $i$
+    \item $\Delta$SBoxes: The abstraction of the sBoxes
+    \item probabilities: The probabilities linked to the SBoxes
+    \item $\delta$SBoxes: The concrete value (byte level) of the sBoxes
+    \item variables that require instantiation: $\delta$PlainText, $\delta$CipherText, $\delta$X, $\delta$SX, $\delta$Y, $\delta$Z and $\delta$WK.
+  \end{itemize}
+  Remark: \\
+    Advanced mds is enable for AES-3-5 to avoid massive exploration of the concrete part of the search tree. The reverse mix column
+    operation is used as the mds property. For advanced MDS, we limit the number of interation by setting LIMIT_ADVANCED_MDS_GENERATION=3.
+    This parameter indicates that advanced mds is enabled for the first four rounds. The advanced MDS property seems to be usefull when the
+    number of active sboxes is not bounded by nbActives[i].
+  Version note: \\
+    Improve heuristic (better performance in both times and nodes)
+    !! IMPORTANT !! The actives sboxes that belong to $WK_{Nr}$ are not counted anymore. This is due to the fact that CipherText
+    can be modified to minimise all the sBoxes present in the last $WK$ [1]. \\
+  [1] Gerault, David, Pascal Lafo{FILE}/srcurcade, Marine Minier, et Christine Solnon. \\
+  « Computing AES Related-Key Differential Characteristics with Constraint Programming ». \\
+  Artificial Intelligence 278 (janvier 2020): 103183. https://doi.org/10.1016/j.artint.2019.103183.
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  gradle_conf: 'build_exp.gradle'
+  gradle_task: 'jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -cp'
+  main_class: 'com.github.rloic.kt.aes.app.truncated.DifferentialKt'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: 66402076b27297025a6d721215fc2a13409de93e
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec} {main_class}'
+experiments:
+# AES 128
+  - name: AES128
+    parameters: [model=Advanced, version=AES-128, r=5, sb=21, INCREMENTAL=1]
+# AES 192
+  - name: AES192
+    parameters: [model=Advanced, version=AES-192, r=10, sb=32, INCREMENTAL=1]
+# AES 256
+  - name: AES256
+    parameters: [model=Advanced, version=AES-256, r=14, sb=42, INCREMENTAL=1]
+measures: ['#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 1
+  unit: HOURS

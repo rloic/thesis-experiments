@@ -1,0 +1,35 @@
+---
+comments: |
+  Model: Midori Advanced Model \\
+  Note version: \\
+    Add Midori 64 bits
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  gradle_conf: 'build_exp.gradle'
+  gradle_task: 'jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -cp'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: 268e72ee0d98aea7f271da7b051af286d94fcef2
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec} com.github.rloic.kt.midori.app.truncated.DifferentialKt'
+experiments:
+  - name: "Midori-64"
+    parameters: [model=Advanced, version=Midori-64, r=20, sb=32, heuristic=Dom_WDeg, INCREMENTAL=true]
+  - name: "Midori-128"
+    parameters: [model=Advanced, version=Midori-128, r=20, sb=64, heuristic=Dom_WDeg, INCREMENTAL=true]
+measures: []
+stats: [time]
+iterations: 1
+timeout:
+  duration: 1
+  unit: HOURS
