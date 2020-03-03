@@ -19,7 +19,7 @@ shortcuts:
   build: '{PROJECT}/build/libs'
   jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
   java: 'java {jvm_args} -cp'
-  main_class: 'com.github.rloic.aes.benchmarks.AESGlobalTest'
+  main_class: 'com.github.rloic.aes.benchmarks.step1.AESGlobalTest'
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
