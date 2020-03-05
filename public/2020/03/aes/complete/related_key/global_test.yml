@@ -6,6 +6,7 @@ comments: |
   became more lazy when introducing batch processing (we work on a set of assignation instead of one by one). As the sum
   propagation requires less computation it's improve speed.
   Use dedicated constraints for MDS
+  Change heuristic search (add objective variable in top of the search) + add reverse mix column
 requirements:
   - name: gradle
     version: 4.9
@@ -23,7 +24,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: b20e500d36dc399dd2af525cd9eae888e975a9e3
+  commit: 43d7ca4eb75c108d9c85fd14c3a6541d89affbc4
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} {main_class}'
 experiments:
@@ -90,7 +91,7 @@ experiments:
   - name: AES256-14-24
     parameters: [version=AES-256, r=14, sb=24]
     level: 2
-measures: ['#s', '#dc'] # s = nb solutions, #dc = nb decision points
+measures: ['p', '#s', '#dc'] # p = best probability , #s = nb solutions, #dc = nb decision points
 stats: [time]
 iterations: 1
 timeout:
