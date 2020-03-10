@@ -6,7 +6,8 @@ comments: |
   became more lazy when introducing batch processing (we work on a set of assignation instead of one by one). As the sum
   propagation requires less computation it's improve speed.
   Use dedicated constraints for MDS
-  Applying only rules 1 to 3 (no enforcing GAC)
+  Add MDS constraints with Y2 and Y3
+  Remove rudondant sum constraints
 requirements:
   - name: gradle
     version: 4.9
@@ -24,7 +25,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: c0ebd2484f8d80b4cf63204347853734bbfd6912
+  commit: 72b2490456b3c2f28b91564a70954737491be812
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} {main_class}'
 experiments:
@@ -34,9 +35,6 @@ experiments:
   - name: AES128-4-12
     parameters: [version=AES-128, r=4, sb=12]
     level: 1
-  - name: AES128-5-17
-    parameters: [version=AES-128, r=5, sb=17]
-    level: 2
 # AES 192
   - name: AES192-3-1
     parameters: [version=AES-192, r=3, sb=1]
@@ -49,15 +47,6 @@ experiments:
     level: 1
   - name: AES192-7-13
     parameters: [version=AES-192, r=7, sb=13]
-    level: 2
-  - name: AES192-8-18
-    parameters: [version=AES-192, r=8, sb=18]
-    level: 2
-  - name: AES192-9-24
-    parameters: [version=AES-192, r=9, sb=24]
-    level: 2
-  - name: AES192-10-27
-    parameters: [version=AES-192, r=10, sb=27]
     level: 2
 # AES 256
   - name: AES256-3-1
@@ -75,21 +64,6 @@ experiments:
     level: 1
   - name: AES256-9-15
     parameters: [version=AES-256, r=9, sb=15]
-    level: 2
-  - name: AES256-10-16
-    parameters: [version=AES-256, r=10, sb=16]
-    level: 2
-  - name: AES256-11-20
-    parameters: [version=AES-256, r=11, sb=20]
-    level: 2
-  - name: AES256-12-20
-    parameters: [version=AES-256, r=12, sb=20]
-    level: 2
-  - name: AES256-13-24
-    parameters: [version=AES-256, r=13, sb=24]
-    level: 2
-  - name: AES256-14-24
-    parameters: [version=AES-256, r=14, sb=24]
     level: 2
 measures: ['#s', '#dc'] # s = nb solutions, #dc = nb decision points
 stats: [time]
