@@ -4,6 +4,7 @@ comments: |
   Removing advanced constraints on colX, colZ and colK
   Also removing redondant sum(eq, "!=", 1)
   Using dedicated MDS constraint on BoolVar[]
+  Add constraints on Y2 and Y3
 requirements:
   - name: gradle
     version: 4.9
@@ -21,7 +22,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 532c0175c5bf681729eb812851b455a5efa215e5
+  commit: 69e995d5080897d2a81a1d7afc3ed3527b560ff2
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} {main_class}'
 experiments:
