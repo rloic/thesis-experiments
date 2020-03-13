@@ -15,7 +15,7 @@ shortcuts:
   gradle_task: 'jar'
   exec: 'Experiment-1.0-SNAPSHOT.jar'
   build: '{PROJECT}/build/libs'
-  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  jvm_args: '-Xmx24g -Duser.country=UK -Duser.language=en'
   java: 'java {jvm_args} -cp'
   main_class: 'com.github.rloic.kt.AESGlobalStep2Kt'
 versioning:
