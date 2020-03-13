@@ -17,11 +17,11 @@ shortcuts:
   build: '{PROJECT}/build/libs'
   jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
   java: 'java {jvm_args} -cp'
-  main_class: 'com.github.rloic.kt.AESGlobalStep2Kt'
+  main_class: 'com.github.rloic.kt.AESGlobalStep1Kt'
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 62f3c8989dd44524f4e564ab2fd48a32ae46a6aa
+  commit: 57885f895a738e10bae7a8f713e2b954ab8a77bd
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} {main_class}'
 experiments:
@@ -88,7 +88,7 @@ experiments:
   - name: AES256-14-24
     parameters: [version=AES-256, r=14, sb=24]
     level: 2
-measures: ['p', '#s', '#dc'] # p = best probability , #s = nb solutions, #dc = nb decision points
+measures: ['#s', '#dc'] # p = best probability , #s = nb solutions, #dc = nb decision points
 stats: [time]
 iterations: 1
 timeout:
