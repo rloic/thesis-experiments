@@ -1,0 +1,96 @@
+---
+comments: |
+  AbstractXOR with batch
+  Constraints on colX, colZ and colK
+  Constraints on colK (Keyschedule XOR)
+  Add dedicated constraints for XOR Sum (Strong filtering) + Byte xor (Lazy) + Galois field multiplication (Lazy)
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  gradle_conf: 'build_exp.gradle'
+  gradle_task: 'jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx22g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -cp'
+  main_class: 'com.github.rloic.kt.AESGlobalStep2Kt'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: ee14198b5a0a40da109a6e639d03a7821ec30a7b
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec} {main_class}'
+experiments:
+# AES 128
+  - name: AES128-3-5
+    parameters: [version=AES-128, r=3, sb=5]
+  - name: AES128-4-12
+    parameters: [version=AES-128, r=4, sb=12]
+    level: 1
+  - name: AES128-5-17
+    parameters: [version=AES-128, r=5, sb=17]
+    level: 3
+# AES 192
+  - name: AES192-3-1
+    parameters: [version=AES-192, r=3, sb=1]
+  - name: AES192-4-4
+    parameters: [version=AES-192, r=4, sb=4]
+  - name: AES192-5-5
+    parameters: [version=AES-192, r=5, sb=5]
+  - name: AES192-6-10
+    parameters: [version=AES-192, r=6, sb=10]
+    level: 1
+  - name: AES192-7-13
+    parameters: [version=AES-192, r=7, sb=13]
+    level: 2
+  - name: AES192-8-18
+    parameters: [version=AES-192, r=8, sb=18]
+    level: 2
+  - name: AES192-9-24
+    parameters: [version=AES-192, r=9, sb=24]
+    level: 2
+  - name: AES192-10-29
+    parameters: [version=AES-192, r=10, sb=29]
+    level: 2
+# AES 256
+  - name: AES256-3-1
+    parameters: [version=AES-256, r=3, sb=1]
+  - name: AES256-4-3
+    parameters: [version=AES-256, r=4, sb=3]
+  - name: AES256-5-3
+    parameters: [version=AES-256, r=5, sb=3]
+  - name: AES256-6-5
+    parameters: [version=AES-256, r=6, sb=5]
+  - name: AES256-7-5
+    parameters: [version=AES-256, r=7, sb=5]
+  - name: AES256-8-10
+    parameters: [version=AES-256, r=8, sb=10]
+    level: 1
+  - name: AES256-9-15
+    parameters: [version=AES-256, r=9, sb=15]
+    level: 2
+  - name: AES256-10-16
+    parameters: [version=AES-256, r=10, sb=16]
+    level: 2
+  - name: AES256-11-20
+    parameters: [version=AES-256, r=11, sb=20]
+    level: 3
+  - name: AES256-12-20
+    parameters: [version=AES-256, r=12, sb=20]
+    level: 3
+  - name: AES256-13-24
+    parameters: [version=AES-256, r=13, sb=24]
+    level: 3
+  - name: AES256-14-24
+    parameters: [version=AES-256, r=14, sb=24]
+    level: 3
+measures: ['p', '#s', '#dc'] # p = best probability , #s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 24
+  unit: HOURS
