@@ -1,0 +1,34 @@
+---
+comments: |
+  Model: Midori Advanced Model (SAT) \\
+  Note version: \\
+    Add Midori 64 bits \\
+    Do not display solutions
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+  - name: python
+    version: 3.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  PICAT_PATH: '{PROJECT}/sat/Picat'
+  MINIZINC_PATH: '{PROJECT}/sat/MiniZincIDE-2.2.3-bundle-linux'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: 1fbf6f65a6abd28318fd105dfc333d4b861a61da
+compile: 'python3 {PROJECT}/sat/download.py'
+execute: 'python3 {PROJECT}/sat/midori/differential.py'
+experiments:
+  - name: "Midori-64"
+    parameters: [version=64, r=16, sb=32, 'PICAT_PATH={PICAT_PATH}', 'MINIZINC_PATH={MINIZINC_PATH}']
+  - name: "Midori-128"
+    parameters: [version=128, r=20, sb=64, 'PICAT_PATH={PICAT_PATH}', 'MINIZINC_PATH={MINIZINC_PATH}']
+measures: []
+stats: [time]
+iterations: 1
+timeout:
+  duration: 1
+  unit: HOURS
