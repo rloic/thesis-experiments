@@ -1,0 +1,98 @@
+---
+comments: |
+  Model: Midori Global XOR \\
+  Note version: \\
+    Start values at the minimal value of the previous round \\
+    I had plain text and cipher text blocks to the problem resolution, global xor is able to perform stronger filtering
+    with this additionnal information.
+    Add Midori 64 bits
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  gradle_conf: 'build_exp.gradle'
+  gradle_task: 'jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -cp'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: 1fbf6f65a6abd28318fd105dfc333d4b861a61da
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec} com.github.rloic.kt.cryptography.midori.app.truncated.RelatedKeyDifferentialPathKt'
+experiments:
+  - name: "Midori-64_3_1"
+    parameters: [model=GlobalXOR, version=Midori-64, r=3, sb=1, order=Reverse, heuristic=Custom]
+  - name: "Midori-64_4_2"
+    parameters: [model=GlobalXOR, version=Midori-64, r=4, sb=2, order=Reverse, heuristic=Custom]
+  - name: "Midori-64_5_2"
+    parameters: [model=GlobalXOR, version=Midori-64, r=5, sb=2, order=Reverse, heuristic=Custom]
+  - name: "Midori-64_6_3"
+    parameters: [model=GlobalXOR, version=Midori-64, r=6, sb=3, order=Reverse, heuristic=Custom]
+  - name: "Midori-64_7_3"
+    parameters: [model=GlobalXOR, version=Midori-64, r=7, sb=3, order=Reverse, heuristic=Custom]
+  - name: "Midori-64_8_4"
+    parameters: [model=GlobalXOR, version=Midori-64, r=8, sb=4, order=Reverse, heuristic=Custom]
+  - name: "Midori-64_9_4"
+    parameters: [model=GlobalXOR, version=Midori-64, r=9, sb=4, order=Reverse, heuristic=Custom]
+  - name: "Midori-64_10_5"
+    parameters: [model=GlobalXOR, version=Midori-64, r=10, sb=5, order=Reverse, heuristic=Custom]
+  - name: "Midori-64_11_5"
+    parameters: [model=GlobalXOR, version=Midori-64, r=11, sb=5, order=Reverse, heuristic=Custom]
+  - name: "Midori-64_12_6"
+    parameters: [model=GlobalXOR, version=Midori-64, r=12, sb=6, order=Reverse, heuristic=Custom]
+  - name: "Midori-64_13_6"
+    parameters: [model=GlobalXOR, version=Midori-64, r=13, sb=6, order=Reverse, heuristic=Custom]
+  - name: "Midori-64_14_7"
+    parameters: [model=GlobalXOR, version=Midori-64, r=14, sb=7, order=Reverse, heuristic=Custom]
+  - name: "Midori-64_15_7"
+    parameters: [model=GlobalXOR, version=Midori-64, r=15, sb=7, order=Reverse, heuristic=Custom]
+  - name: "Midori-64_16_8"
+    parameters: [model=GlobalXOR, version=Midori-64, r=16, sb=8, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_3_3"
+    parameters: [model=GlobalXOR, version=Midori-128, r=3, sb=3, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_4_4"
+    parameters: [model=GlobalXOR, version=Midori-128, r=4, sb=4, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_5_5"
+    parameters: [model=GlobalXOR, version=Midori-128, r=5, sb=5, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_6_6"
+    parameters: [model=GlobalXOR, version=Midori-128, r=6, sb=6, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_7_7"
+    parameters: [model=GlobalXOR, version=Midori-128, r=7, sb=7, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_8_8"
+    parameters: [model=GlobalXOR, version=Midori-128, r=8, sb=8, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_9_9"
+    parameters: [model=GlobalXOR, version=Midori-128, r=9, sb=9, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_10_10"
+    parameters: [model=GlobalXOR, version=Midori-128, r=10, sb=10, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_11_11"
+    parameters: [model=GlobalXOR, version=Midori-128, r=11, sb=11, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_12_12"
+    parameters: [model=GlobalXOR, version=Midori-128, r=12, sb=12, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_13_13"
+    parameters: [model=GlobalXOR, version=Midori-128, r=13, sb=13, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_14_14"
+    parameters: [model=GlobalXOR, version=Midori-128, r=14, sb=14, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_15_15"
+    parameters: [model=GlobalXOR, version=Midori-128, r=15, sb=15, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_16_16"
+    parameters: [model=GlobalXOR, version=Midori-128, r=16, sb=16, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_17_17"
+    parameters: [model=GlobalXOR, version=Midori-128, r=17, sb=17, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_18_18"
+    parameters: [model=GlobalXOR, version=Midori-128, r=18, sb=18, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_19_19"
+    parameters: [model=GlobalXOR, version=Midori-128, r=19, sb=19, order=Reverse, heuristic=Custom]
+  - name: "Midori-128_20_20"
+    parameters: [model=GlobalXOR, version=Midori-128, r=20, sb=20, order=Reverse, heuristic=Custom]
+measures: ['#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 1
+  unit: HOURS
