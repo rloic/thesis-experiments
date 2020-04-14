@@ -1,0 +1,37 @@
+---
+comments: |
+  Experiment to search minimal number of active sboxes in midori single key
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  gradle_conf: 'build_exp.gradle'
+  gradle_task: 'jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -cp'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: ff7b187609e5ff7b21439ea3a8fc6c233c0627e8
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec} com.github.rloic.kt.cryptography.midori.app.singlekey.complete.GlobalXORKt'
+experiments:
+  - name: "Midori-r3"
+    parameters: [r=3, sb=32]
+  - name: "Midori-r4"
+    parameters: [r=4, sb=64]
+  - name: "Midori-r5"
+    parameters: [r=5, sb=64]
+  - name: "Midori-r6"
+    parameters: [r=6, sb=64]
+measures: []
+stats: [time]
+iterations: 1
+timeout:
+  duration: 24
+  unit: HOURS
