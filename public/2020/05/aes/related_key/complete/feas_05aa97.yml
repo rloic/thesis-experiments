@@ -15,7 +15,7 @@ shortcuts:
   jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
   java: 'java {jvm_args} -cp'
   default_args: 'AbsXOR=Feas'
-  main_class: 'com.github.rloic.kt.cryptography.aes.app.concrete.AESGlobalStep1Kt'
+  main_class: 'com.github.rloic.kt.cryptography.aes.app.concrete.AESGlobalStep2Kt'
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
