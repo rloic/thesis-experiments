@@ -1,6 +1,6 @@
 ---
 comments: |
-  Model: Midori Global XOR v2 (Gac)
+  Model: Midori Global XOR v2 (Feas)
 requirements:
   - name: gradle
     version: 4.9
@@ -14,12 +14,13 @@ shortcuts:
   build: '{PROJECT}/build/libs'
   jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
   java: 'java {jvm_args} -cp'
+  main_class: 'com.github.rloic.kt.cryptography.midori.app.relatedkey.concrete.RelatedKeyDifferentialPathKt'
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 98ee0258a19cc3a19994f2e411d5650abd78b9f0
+  commit: 345d9201d4481fbcc60afcac3ffe9463e5362b09
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
-execute: '{java} {build}/{exec} com.github.rloic.kt.cryptography.midori.app.relatedkey.truncated.RelatedKeyDifferentialPathKt'
+execute: '{java} {build}/{exec} {main_class}'
 experiments:
   - name: "Midori-64_3_1"
     parameters: [model=GlobalXOR, version=Midori-64, r=3, sb=1, order=Reverse, heuristic=Custom]
@@ -85,7 +86,7 @@ experiments:
     parameters: [model=GlobalXOR, version=Midori-128, r=19, sb=19, order=Reverse, heuristic=Custom]
   - name: "Midori-128_20_20"
     parameters: [model=GlobalXOR, version=Midori-128, r=20, sb=20, order=Reverse, heuristic=Custom]
-measures: ['#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
+measures: ['p', '#s', '#dc'] # p = probability, s = nb solutions, #dc = nb decision points
 stats: [time]
 iterations: 1
 timeout:

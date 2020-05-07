@@ -1,6 +1,6 @@
 ---
 comments: |
-  Model: Midori Global XOR v2 (Gac)
+  Model: Midori Global XOR v2 (Feas)
 requirements:
   - name: gradle
     version: 4.9
@@ -17,7 +17,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 98ee0258a19cc3a19994f2e411d5650abd78b9f0
+  commit: 345d9201d4481fbcc60afcac3ffe9463e5362b09
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} com.github.rloic.kt.cryptography.midori.app.relatedkey.truncated.RelatedKeyDifferentialPathKt'
 experiments:
