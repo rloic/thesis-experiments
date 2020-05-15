@@ -24,13 +24,13 @@ compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} {main_class} AbsXOR={consistency}'
 experiments:
   - name: "Midori-64_3_7"
-    parameters: [model=GlobalXOR, version=Midori-64, r=3, sb=7]
+    parameters: [version=Midori-64, r=3, sb=7]
   - name: "Midori-64_4_16"
-    parameters: [model=GlobalXOR, version=Midori-64, r=4, sb=16]
+    parameters: [version=Midori-64, r=4, sb=16]
   - name: "Midori-64_5_23"
-    parameters: [model=GlobalXOR, version=Midori-64, r=5, sb=23]
+    parameters: [version=Midori-64, r=5, sb=23]
   - name: "Midori-64_6_30"
-    parameters: [model=GlobalXOR, version=Midori-64, r=6, sb=30]
+    parameters: [version=Midori-64, r=6, sb=30]
 measures: ['p', '#s', '#dc'] # p = best probability, #s = nb solutions, #dc = nb decision points
 stats: [time]
 iterations: 1

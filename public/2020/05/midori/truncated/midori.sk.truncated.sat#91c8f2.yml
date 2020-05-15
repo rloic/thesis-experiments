@@ -1,0 +1,34 @@
+---
+comments: |
+  Model: Midori Advanced Model (SAT) \\
+  Note version: \\
+    Add Midori 64 bits \\
+    Do not display solutions
+requirements:
+  - name: python
+    version: 3.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  PICAT_PATH: '{PROJECT}/sat/Picat'
+  MINIZINC_PATH: '{PROJECT}/sat/MiniZincIDE-2.2.3-bundle-linux'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: 91c8f2a4a430564460e2cd41c7948c9f836afdbd
+compile: 'python3 {PROJECT}/sat/download.py'
+execute: 'python3 {PROJECT}/sat/midori/differential.py PICAT_PATH={PICAT_PATH} MINIZINC_PATH={MINIZINC_PATH}'
+experiments:
+  - name: "Midori-64_3_7"
+    parameters: [version=64, r=3, sb=7]
+  - name: "Midori-64_4_16"
+    parameters: [version=64, r=4, sb=16]
+  - name: "Midori-64_5_23"
+    parameters: [version=64, r=5, sb=23]
+  - name: "Midori-64_6_30"
+    parameters: [version=64, r=6, sb=30]
+measures: ['sb', '#s'] # sb = number of active sboxes, #s = number of solutions
+stats: [time]
+iterations: 1
+timeout:
+  duration: 12
+  unit: HOURS
