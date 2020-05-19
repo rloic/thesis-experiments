@@ -1,0 +1,41 @@
+---
+comments: |
+  Model: AES Single Key Global XOR v2 (Feas)
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  gradle_conf: 'build_exp.gradle'
+  gradle_task: 'jar'
+  exec: 'Experiment-1.0-SNAPSHOT.jar'
+  build: '{PROJECT}/build/libs'
+  jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
+  java: 'java {jvm_args} -cp'
+  main_class: 'com.github.rloic.kt.cryptography.aes.app.singlekey.concrete.AESGlobalKt'
+  consistency: 'Gac'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: 47ccae33b331e5a4ad699e49857342445ce1275d
+compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
+execute: '{java} {build}/{exec} {main_class} AbsXOR={consistency}'
+experiments:
+  - name: "AES-3-9"
+    parameters: [version=AES-256, r=3, sb=9]
+  - name: "AES-4-25"
+    parameters: [version=AES-256, r=4, sb=25]
+  - name: "AES-5-26"
+    parameters: [version=AES-256, r=5, sb=26]
+  - name: "AES-6-30"
+    parameters: [version=AES-256, r=6, sb=30]
+  - name: "AES-7-34"
+    parameters: [version=AES-256, r=7, sb=34]
+measures: ['#s', '#dc'] # #s = nb solutions, #dc = nb decision points
+stats: [time]
+iterations: 1
+timeout:
+  duration: 24
+  unit: HOURS

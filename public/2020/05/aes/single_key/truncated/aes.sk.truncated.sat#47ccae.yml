@@ -1,0 +1,39 @@
+---
+comments: |
+  Model: AES Advanced Model (SAT) \\
+  From Gerault, David, Pascal Lafourcade, Marine Minier, and Christine Solnon. ‘Computing AES Related-Key Differential Characteristics with Constraint Programming’. Artificial Intelligence 278 (January 2020): 103183. https://doi.org/10.1016/j.artint.2019.103183.
+  Source code available at https://gitlab.inria.fr/source_code/aes-cryptanalysis-cp-xor-2019
+requirements:
+  - name: gradle
+    version: 4.9
+  - name: java
+    version: 1.8
+  - name: python
+    version: 3.8
+dev_path: '/home/rloic/IdeaProjects/thesis-code'
+shortcuts:
+  PICAT_PATH: '{PROJECT}/sat/Picat'
+  MINIZINC_PATH: '{PROJECT}/sat/MiniZincIDE-2.2.3-bundle-linux'
+versioning:
+  repository: https://github.com/rloic/thesis-code
+  authentication: true
+  commit: 47ccae33b331e5a4ad699e49857342445ce1275d
+compile: 'python3 {PROJECT}/sat/download.py'
+execute: 'python3 {PROJECT}/sat/aes/differential.py PICAT_PATH={PICAT_PATH} MINIZINC_PATH={MINIZINC_PATH}'
+experiments:
+  - name: "AES-3-9"
+    parameters: [version=256, r=3, sb=9]
+  - name: "AES-4-25"
+    parameters: [version=256, r=4, sb=25]
+  - name: "AES-5-26"
+    parameters: [version=256, r=5, sb=26]
+  - name: "AES-6-30"
+    parameters: [version=256, r=6, sb=30]
+  - name: "AES-7-34"
+    parameters: [version=256, r=7, sb=34]
+measures: []
+stats: [time]
+iterations: 1
+timeout:
+  duration: 24
+  unit: HOURS
