@@ -15,11 +15,11 @@ shortcuts:
   jvm_args: '-Xmx16g -Duser.country=UK -Duser.language=en'
   java: 'java {jvm_args} -cp'
   main_class: 'com.github.rloic.kt.cryptography.aes.app.singlekey.truncated.AESGlobalKt'
-  consistency: 'Feas'
+  consistency: 'Gac'
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 47ccae33b331e5a4ad699e49857342445ce1275d
+  commit: 87791b3eb5971229f2d818cb0bf3b540234589a6
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} {main_class} AbsXOR={consistency}'
 experiments:

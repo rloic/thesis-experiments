@@ -19,7 +19,7 @@ shortcuts:
 versioning:
   repository: https://github.com/rloic/thesis-code
   authentication: true
-  commit: 47ccae33b331e5a4ad699e49857342445ce1275d
+  commit: 87791b3eb5971229f2d818cb0bf3b540234589a6
 compile: 'gradle --build-file {PROJECT}/{gradle_conf} {gradle_task}'
 execute: '{java} {build}/{exec} {main_class} AbsXOR={consistency}'
 experiments:
@@ -27,7 +27,7 @@ experiments:
     parameters: [version=AES-256, r=3, sb=9]
   - name: "AES-4-25"
     parameters: [version=AES-256, r=4, sb=25]
-  - name: "AES-5-26"
+  - name: "AES-5-25"
     parameters: [version=AES-256, r=5, sb=26]
   - name: "AES-6-30"
     parameters: [version=AES-256, r=6, sb=30]
